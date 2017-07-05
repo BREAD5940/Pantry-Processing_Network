@@ -46,7 +46,11 @@ public class Network extends Thread {
 			this.currentCycle++;
 			for (Node node : this.nodes) {
 				if (node.requiresUpdate()) {
-					node.update();
+					try {
+						node.update();
+					} catch (IllegalUpdateThreadException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			long cycleEndTime = System.nanoTime();
@@ -68,42 +72,27 @@ public class Network extends Thread {
 	 *            The Node to add to this Network.
 	 * @throws IllegalStateException
 	 *             If the Network is already running.
-	 * @throws IllegalArgumentException
-	 *             If the Node is null.
 	 */
-	public void addNode(Node node) throws IllegalStateException, IllegalArgumentException {
-		if (node == null) {
-			throw new IllegalArgumentException("Node is null");
-		}
+	protected void addNode(Node node) throws IllegalStateException {
 		if (this.isAlive()) {
 			throw new IllegalStateException("Network is already running");
 		}
-		nodes.add(node);
-	}
-
-	/**
-	 * Adds a Set of Nodes to the Network.
-	 * 
-	 * @param nodes
-	 *            The Set to add.
-	 * @throws IllegalStateException
-	 *             If the Thread is already running.
-	 * @throws IllegalArgumentException
-	 *             If a Node in the set is null.
-	 */
-	public void addNodes(Set<Node> nodes) throws IllegalStateException, IllegalArgumentException {
-		for (Node node : nodes) {
-			this.addNode(node);
+		if (node != null) {
+			nodes.add(node);
 		}
 	}
 
 	/**
 	 * Gets the current cycle that this Network is on.
 	 * 
-	 * @return The current cycle this Network is on.
+	 * @return The current cycle this Network is on. If Network is not running
+	 *         returns -1.
 	 */
 	public long getCurrentCycle() {
-		return currentCycle;
+		if (this.isAlive())
+			return currentCycle;
+		else
+			return -1;
 	}
 
 	/**
@@ -119,9 +108,12 @@ public class Network extends Thread {
 	/**
 	 * Gets the length of time this Network has run in milliseconds.
 	 * 
-	 * @return The length of time this Network has run in milliseconds.
+	 * @return The length of time this Network has run in milliseconds. If Network is not running returns -1. 
 	 */
 	public long getNetworkTime() {
-		return (System.nanoTime() - this.startTime) / 1000;
+		if (this.isAlive())
+			return (System.nanoTime() - this.startTime) / 1000;
+		else 
+			return -1;
 	}
 }

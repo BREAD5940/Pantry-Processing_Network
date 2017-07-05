@@ -38,6 +38,9 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * @return The current cached value.
 	 */
 	public T getValue() {
+		// TODO change this so the Node updates its value. Is challenging
+		// because the thread running getValue might not be the Network that
+		// owns this.
 		return this.value;
 	}
 }
