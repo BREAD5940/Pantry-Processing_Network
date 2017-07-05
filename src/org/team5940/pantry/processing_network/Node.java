@@ -1,7 +1,6 @@
 package org.team5940.pantry.processing_network;
 
-import java.util.Collection;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.Set;
 
 /**
  * A Node is a component of a single Network. Nodes perform some sort of operation 0 or 1 time(s) every network cycle: the first time update() is successfully called on a given network cycle.
@@ -17,7 +16,7 @@ public abstract class Node {
 
 	/**
 	 * Updates this if it has not yet been updated the current network cycle.
-	 * @throws IllegalUpdateThreadException The thread calling this method is not 
+	 * @throws IllegalUpdateThreadException The thread calling this method is not this' network.
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 
@@ -30,10 +29,8 @@ public abstract class Node {
 	public abstract boolean requiresUpdate();
 
 	/**
-	 * Gets the Nodes that this Node retrieves data from. Sources should not
-	 * change after initialization.
-	 * 
-	 * @return The Nodes that this uses.
+	 * Gets the Nodes that this Node retrieves data from. Sources should not change after initialization. The set returned must be clone and not any internally used reference.
+	 * @return A Set containing any Nodes that this uses.
 	 */
-	public abstract Collection<Node> enumerateSources();
+	public abstract Set<Node> enumerateSources();
 }
