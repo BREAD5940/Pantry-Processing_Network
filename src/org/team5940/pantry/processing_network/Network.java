@@ -73,26 +73,12 @@ public class Network extends Thread {
 	 * @throws IllegalStateException
 	 *             If the Network is already running.
 	 */
-	public void addNode(Node node) throws IllegalStateException {
+	protected void addNode(Node node) throws IllegalStateException {
 		if (this.isAlive()) {
 			throw new IllegalStateException("Network is already running");
 		}
 		if (node != null) {
 			nodes.add(node);
-		}
-	}
-
-	/**
-	 * Adds a Set of Nodes to the Network.
-	 * 
-	 * @param nodes
-	 *            The Set to add.
-	 * @throws IllegalStateException
-	 *             If the Thread is already running.
-	 */
-	public void addNodes(Set<Node> nodes) throws IllegalStateException {
-		for (Node node : nodes) {
-			this.addNode(node);
 		}
 	}
 
