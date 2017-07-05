@@ -16,8 +16,8 @@ public abstract class Node {
 	protected abstract void doUpdate();
 
 	/**
-	 * Updates the Node if it has not yet been updated this network cycle.
-	 * @throws IllegalUpdateThreadException
+	 * Updates this if it has not yet been updated the current network cycle.
+	 * @throws IllegalUpdateThreadException The thread calling this method is not 
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 
