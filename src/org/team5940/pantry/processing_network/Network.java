@@ -85,10 +85,14 @@ public class Network extends Thread {
 	/**
 	 * Gets the current cycle that this Network is on.
 	 * 
-	 * @return The current cycle this Network is on.
+	 * @return The current cycle this Network is on. If Network is not running
+	 *         returns -1.
 	 */
 	public long getCurrentCycle() {
-		return currentCycle;
+		if (this.isAlive())
+			return currentCycle;
+		else
+			return -1;
 	}
 
 	/**
@@ -104,9 +108,12 @@ public class Network extends Thread {
 	/**
 	 * Gets the length of time this Network has run in milliseconds.
 	 * 
-	 * @return The length of time this Network has run in milliseconds.
+	 * @return The length of time this Network has run in milliseconds. If Network is not running returns -1. 
 	 */
 	public long getNetworkTime() {
-		return (System.nanoTime() - this.startTime) / 1000;
+		if (this.isAlive())
+			return (System.nanoTime() - this.startTime) / 1000;
+		else 
+			return -1;
 	}
 }
