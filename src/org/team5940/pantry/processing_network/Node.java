@@ -1,24 +1,25 @@
 package org.team5940.pantry.processing_network;
 
 import java.util.Collection;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * A Node is a component of a Network. Nodes perform some sort of operation 0-1 times every network cycle: the first time update() is called on a given network cycle.
- * @author Michael BentleyA node is an element in {@link Network} which is updated every
- *         cycle.
+ * A Node is a component of a single Network. Nodes perform some sort of operation 0 or 1 time(s) every network cycle: the first time update() is successfully called on a given network cycle.
+ * @author Michael Bentley
+ * 
  */
 public abstract class Node {
 
 	/**
-	 * Update the node. Run 0 - 1 times during a Network cycle.
+	 * Update the node. It can only be called 0 or 1 time(s) per Network cycle.
 	 */
 	protected abstract void doUpdate();
 
 	/**
-	 * Checks if this Node has been updated during the Network cycle yet and if
-	 * not it runs doUpdate().
+	 * Updates the Node if it has not yet been updated this network cycle.
+	 * @throws IllegalUpdateThreadException
 	 */
-	public final void update() {
+	public final void update() throws IllegalUpdateThreadException {
 
 	}
 	
