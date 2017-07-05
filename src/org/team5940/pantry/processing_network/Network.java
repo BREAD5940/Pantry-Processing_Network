@@ -78,6 +78,7 @@ public class Network extends Thread {
 			throw new IllegalStateException("Network is already running");
 		}
 		if (node != null) {
+			// TODO change this to check that node has this as its Network. 
 			nodes.add(node);
 		}
 	}
