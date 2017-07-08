@@ -3,6 +3,11 @@ package org.team5940.pantry.processing_network;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * A Network is a collection of {@link Node}s that updates them.
+ * @author David Boles
+ *
+ */
 public class Network extends Thread {
 
 	/**
