@@ -4,9 +4,27 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * A Network is a collection of {@link Node}s that updates them.
+ * A Network is a thread that updates a set of {@link Node}s.
+ * <br><br>
+ * Timing on a network is done in cycles, where all events in a cycle internally appear to happen instantaneously.
+ * Once a network is started, cycles occur every cycleDelay, some number of nanoseconds.
+ * Due to technical limitations (specifically the amount of time it actually takes a network to complete a cycle and the accuracy of System.nanoTime())
+ * 	cycles may occur more slowly than specified but they will never occur more quickly. For timing needs inside of Nodes, {@link Network#getNetworkTime()} is available.
+ * <br><br>
+ * Nodes are added to a network automatically when they are initialized (as long as the network has not already been started).
+ * Nodes must declare on initialization any {@link SourceNode}s they utilize which forces them to form a DAG (Directed Acyclic Graph) where no "looping" dependencies
+ * 	are present.
+ * This is necessary due to the "instantaneous" nature of network cycles, you cannot have operations that (indirectly) rely on themselves: the cycle would never
+ * 	complete.
+ * <br><br>
+ * Nodes can perform some sort of operation up to once every cycle, when their doUpdate method is internally called.
+ * A node is manually updated (if they haven't already been) by the network on a cycle if node.requiresUpdate() returns true.
+ * Value nodes are also updated when another node calls node.getValue().
+ * This system of updating values within cycles is advantageous because code using the values is guaranteed an up-to-date value (to within this cycle) but the value
+ * 	can be buffered (not recalculated, saving computer resources) because it is guaranteed not to change.
+ * 
  * @author David Boles
- *
+ * 
  */
 public class Network extends Thread {
 
