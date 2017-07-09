@@ -29,9 +29,9 @@ import java.util.HashSet;
 public class Network extends Thread {
 
 	/**
-	 * The update rate of this Network in milliseconds.
+	 * The lowest number of nanoseconds between the start of cycles for this Network.
 	 */
-	int updateRate;
+	long cycleDelay;
 
 	/**
 	 * The Nodes that this Network updates.
@@ -41,22 +41,26 @@ public class Network extends Thread {
 	/**
 	 * The current cycle this Network is on.
 	 */
-	int currentCycle;
+	long currentCycle = -1;
 
 	/**
-	 * The time this Network was started.
+	 * The value of System.nanoTime() when this is first started.
 	 */
 	long startTime;
+	
+	/**
+	 * The value of System.nanoTime() when the last (potentially current) cycle started.
+	 */
+	long lastCycleStart;
 
 	/**
-	 * Creates a new Network with a set update rate.
+	 * Creates a new Network with the given cycle delay.
 	 * 
-	 * @param updateRate
-	 *            The rate to try to update this Network at. Could be slower but
-	 *            not faster.
+	 * @param cycleDelay
+	 *            The minimum number of nanoseconds between the beginning of cycles.
 	 */
-	public Network(int updateRate) {
-		this.updateRate = updateRate;
+	public Network(int cycleDelay) {
+		this.cycleDelay = cycleDelay;
 		this.nodes = new HashSet<>();
 	}
 
@@ -65,26 +69,28 @@ public class Network extends Thread {
 		this.startTime = System.nanoTime();
 		this.currentCycle = 0;
 		while (!this.isInterrupted()) {
-			long cycleStartTime = System.nanoTime();
-			this.currentCycle++;
-			for (Node node : this.nodes) {
-				if (node.requiresUpdate()) {
-					try {
-						node.update();
-					} catch (IllegalUpdateThreadException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			long cycleEndTime = System.nanoTime();
-			long extraTime = this.updateRate - (cycleEndTime - cycleStartTime) / 1000;
-			if (extraTime > 0) {
-				try {
-					Thread.sleep(extraTime);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+			this.lastCycleStart = System.nanoTime();
+//			long cycleStartTime = System.nanoTime();
+//			//this.currentCycle++;
+//			for (Node node : this.nodes) {
+//				if (node.requiresUpdate()) {
+//					try {//TODO add documentation about failed updates
+//						node.update();
+//					} catch (IllegalUpdateThreadException e) {
+//						//TODO logging stuff
+//					}
+//				}
+//			}
+//			long cycleEndTime = System.nanoTime();
+//			long extraTime = this.cycleDelay - (cycleEndTime - cycleStartTime) / 1000;
+//			if (extraTime > 0) {
+//				try {
+//					Thread.sleep(extraTime);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+			
 		}
 	}
 
@@ -126,7 +132,7 @@ public class Network extends Thread {
 	 * @return The update rate of the Network in milliseconds.
 	 */
 	public int getUpdateRate() {
-		return this.updateRate;
+		return this.cycleDelay;
 	}
 
 	/**
