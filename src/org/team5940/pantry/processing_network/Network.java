@@ -6,7 +6,7 @@ import java.util.HashSet;
 /**
  * A Network is a thread that updates a set of {@link Node}s.
  * <br><br>
- * Timing on a network is done in cycles, where all events in a cycle internally appear to happen instantaneously.
+ * Timing on a network is done in cycles, code running within a cycle should not act differently because of time passing during the cycle.
  * Once a network is started, cycles occur every cycleDelay, some number of nanoseconds.
  * Due to technical limitations (specifically the amount of time it actually takes a network to complete a cycle and the accuracy of System.nanoTime())
  * 	cycles may occur more slowly than specified but they will never occur more quickly. For timing needs inside of Nodes, {@link Network#getNetworkTime()} is available.
