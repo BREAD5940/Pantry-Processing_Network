@@ -40,7 +40,12 @@ public abstract class Node {
 	 */
 	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
+			//TODO log
 			throw new IllegalArgumentException("Null Network");
+		}
+		if(network.getState() != Thread.State.NEW) {
+			//TODO log
+			throw new IllegalStateException("Network Already Started");
 		}
 		this.network = network;
 		this.network.addNode(this);
@@ -64,9 +69,9 @@ public abstract class Node {
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 		if(this.network == Thread.currentThread()) {
-			if(this.network.getCurrentCycle() != this.lastUpdate) {//They would both be -1 if the network hasn't been started but it shouldn't get there without it being started due to the previous line.
+			if(this.network.getLastCycle() != this.lastUpdate) {//They would both be -1 if the network hasn't been started but it shouldn't get there without it being started due to the previous line.
 				this.doUpdate();
-				this.lastUpdate = this.network.getCurrentCycle();//lastUpdate only changes after update completes.
+				this.lastUpdate = this.network.getLastCycle();//lastUpdate only changes after update completes.
 			}
 		}else {
 			throw new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString());
