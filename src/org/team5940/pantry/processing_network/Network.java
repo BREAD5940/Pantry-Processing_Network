@@ -119,7 +119,7 @@ public class Network extends Thread {
 		}
 		for(Node source : node.enumerateSources()) {
 			//TODO log
-			if(!this.nodes.contains(node)) {
+			if(source != null && !this.nodes.contains(node)) {
 				throw new IllegalArgumentException("Node Source Not In Network");
 			}
 		}
