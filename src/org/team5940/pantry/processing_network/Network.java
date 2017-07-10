@@ -24,7 +24,7 @@ import java.util.HashSet;
  * This system of updating values within cycles is advantageous because code using the values is guaranteed an up-to-date value (to within this cycle) but the value
  * 	can be buffered (not recalculated, saving computer resources) because it is guaranteed not to change.
  * 
- * @author David Boles
+ * @author Michael Bentley, David Boles
  * 
  */
 public class Network extends Thread {
