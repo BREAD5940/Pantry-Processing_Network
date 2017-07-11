@@ -102,7 +102,7 @@ public class Network extends Thread {
 	 * Adds a Node for this Network.
 	 * @param node The Node to add to this Network.
 	 * @throws IllegalStateException the Network has already been started.
-	 * @throws IllegalArgumentException node is null, this isn't its network, or it enumerates sources that are null or aren't a part of this network.
+	 * @throws IllegalArgumentException node is null, this isn't its network, or it enumerates sources that aren't a part of this network.
 	 */
 	protected synchronized void addNode(Node node) throws IllegalStateException, IllegalArgumentException {
 		if (this.getState() != Thread.State.NEW){
@@ -119,7 +119,7 @@ public class Network extends Thread {
 		}
 		for(Node source : node.enumerateSources()) {
 			//TODO log
-			if(source != null && !this.nodes.contains(node)) {
+			if(!this.nodes.contains(source)) {
 				throw new IllegalArgumentException("Node Source Not In Network");
 			}
 		}
