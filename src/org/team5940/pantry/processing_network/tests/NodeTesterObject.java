@@ -15,7 +15,7 @@ public class NodeTesterObject extends Node{
 
 	@Override
 	protected void doUpdate() {
-		System.out.println("Hello");
+		
 	}
 
 }

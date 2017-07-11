@@ -30,6 +30,9 @@ public abstract class Node {
 	 */
 	long lastUpdate = -1;
 	
+	
+	static final Object lockobj = new Object();
+	
 	/**
 	 * Initialize a new Node.
 	 * @param network The {@link Network} that this node is a part of.
@@ -96,8 +99,10 @@ public abstract class Node {
 	 */
 	public Set<SourceNode<?>> enumerateSources() {
 		HashSet<SourceNode<?>> out = new HashSet<>();
-		synchronized (this.sources) {
-			this.sources.forEach(node -> out.add(node));
+		synchronized (lockobj) {
+			if(this.sources != null) {
+				this.sources.forEach(node -> out.add(node));
+			}
 		}
 		return out;
 	}
