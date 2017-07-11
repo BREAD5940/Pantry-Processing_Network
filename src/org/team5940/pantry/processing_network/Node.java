@@ -30,9 +30,6 @@ public abstract class Node {
 	 */
 	long lastUpdate = -1;
 	
-	
-	static final Object lockobj = new Object();
-	
 	/**
 	 * Initialize a new Node.
 	 * @param network The {@link Network} that this node is a part of.
@@ -42,6 +39,9 @@ public abstract class Node {
 	 * @throws IllegalStateException network has already been started.
 	 */
 	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
+		
+
+		
 		if(network == null) {
 			//TODO log
 			throw new IllegalArgumentException("Null Network");
@@ -50,17 +50,21 @@ public abstract class Node {
 			//TODO log
 			throw new IllegalStateException("Network Already Started");
 		}
-		this.network = network;
-		this.network.addNode(this);
 		
 		if(sources == null) {
 			sources = new HashSet<>();
 		}
+		
+		this.sources = sources;
+		
+		this.network = network;
+		this.network.addNode(this);
+		
+		
 		for(SourceNode<?> sourceNode:sources) {
 			if(sourceNode == null)
 				throw new IllegalArgumentException("SourceNode is Null");
 		}
-		this.sources = sources;
 		
 		this.requireUpdate = requireUpdate;
 	}
@@ -99,10 +103,8 @@ public abstract class Node {
 	 */
 	public Set<SourceNode<?>> enumerateSources() {
 		HashSet<SourceNode<?>> out = new HashSet<>();
-		synchronized (lockobj) {
-			if(this.sources != null) {
+		synchronized (this.sources) {
 				this.sources.forEach(node -> out.add(node));
-			}
 		}
 		return out;
 	}
