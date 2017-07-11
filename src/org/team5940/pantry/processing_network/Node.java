@@ -53,7 +53,7 @@ public abstract class Node {
 		if(sources == null) {
 			sources = new HashSet<>();
 		}
-		for(SourceNode sourceNode:sources) {
+		for(SourceNode<?> sourceNode:sources) {
 			if(sourceNode == null)
 				throw new IllegalArgumentException("SourceNode is Null");
 		}
