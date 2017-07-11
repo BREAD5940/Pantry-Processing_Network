@@ -17,5 +17,11 @@ public class NodeTest {
 		Network network = new Network(3);
 		NodeTesterObject node = new NodeTesterObject(network,null, false);
 	}
+	
+	@Test
+	public void testNode_UpdateNoSources() {
+		Network network = new Network(3);
+		NodeTesterObject node = new NodeTesterObject(network,null, true);
+	}
 
 }
