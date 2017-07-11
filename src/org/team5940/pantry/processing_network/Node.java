@@ -35,7 +35,7 @@ public abstract class Node {
 	 * @param network The {@link Network} that this node is a part of.
 	 * @param sources The {@link SourceNode}s used by this, if null assumes no sources.
 	 * @param requireUpdate Whether to, by default, require updates. The requiresUpdate() method can always be overridden to change behavior.
-	 * @throws IllegalArgumentException network is null.
+	 * @throws IllegalArgumentException network is null, or one of the {@link SourceNode}s in source is null.
 	 * @throws IllegalStateException network has already been started.
 	 */
 	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
@@ -52,6 +52,10 @@ public abstract class Node {
 		
 		if(sources == null) {
 			sources = new HashSet<>();
+		}
+		for(SourceNode sourceNode:sources) {
+			if(sourceNode == null)
+				throw new IllegalArgumentException("SourceNode is Null");
 		}
 		this.sources = sources;
 		
