@@ -54,8 +54,9 @@ public abstract class Node {
 			sources = new HashSet<>();
 		}
 		for(SourceNode<?> sourceNode:sources) {
-			if(sourceNode == null)
+			if(sourceNode == null) {
 				throw new IllegalArgumentException("SourceNode is Null");
+			}
 		}
 		this.sources = sources;
 		
