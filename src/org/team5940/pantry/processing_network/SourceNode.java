@@ -22,6 +22,7 @@ public abstract class SourceNode<T extends Object> extends Node {
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, sources, requireUpdate);
 		// TODO Auto-generated constructor stub
+		System.out.println("Sources: " + sources);
 	}
 
 	/**
@@ -29,7 +30,7 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * 
 	 * @return The new value.
 	 */
-	abstract T updateValue();
+	protected abstract T updateValue();
 
 	/**
 	 * Runs updateValue() and caches what it returns. Also logs it.
