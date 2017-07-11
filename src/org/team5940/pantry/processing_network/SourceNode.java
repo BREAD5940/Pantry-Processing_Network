@@ -22,7 +22,6 @@ public abstract class SourceNode<T extends Object> extends Node {
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, sources, requireUpdate);
 		// TODO Auto-generated constructor stub
-		System.out.println("Sources: " + sources);
 	}
 
 	/**
