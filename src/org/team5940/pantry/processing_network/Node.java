@@ -40,12 +40,11 @@ public abstract class Node {
 	 */
 	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
 		
-
-		
 		if(network == null) {
 			//TODO log
 			throw new IllegalArgumentException("Null Network");
 		}
+		
 		if(network.getState() != Thread.State.NEW) {
 			//TODO log
 			throw new IllegalStateException("Network Already Started");
@@ -55,18 +54,17 @@ public abstract class Node {
 			sources = new HashSet<>();
 		}
 		
-		this.sources = sources;
-		
-		this.network = network;
-		this.network.addNode(this);
-		
-		
 		for(SourceNode<?> sourceNode:sources) {
 			if(sourceNode == null)
 				throw new IllegalArgumentException("SourceNode is Null");
 		}
 		
+		this.sources = sources;
+		this.network = network;
+		this.network.addNode(this);
 		this.requireUpdate = requireUpdate;
+		
+		
 	}
 	
 	/**

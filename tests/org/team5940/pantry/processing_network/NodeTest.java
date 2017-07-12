@@ -15,17 +15,17 @@ public class NodeTest {
 	Network network = new Network(3);
 	
 	@Test
-	public void testNode_NoUpdateNoSources() {
+	public void testNode_NoUpdateAlsoNoSources() {
 		NodeTesterObject node = new NodeTesterObject(network,null, false);
 	}
 	
 	@Test
-	public void testNode_UpdateNoSources() {
+	public void testNode_DoesUpdateAlsoNoSources() {
 		NodeTesterObject node = new NodeTesterObject(network,null, true);
 	}
 	
 	@Test
-	public void testNode_UpdateEmptySources() {
+	public void testNode_DoesUpdateAlsoEmptySources() {
 		Set<SourceNode<?>> sources = new HashSet<>();
 		NodeTesterObject node = new NodeTesterObject(network,sources, true);
 	}
@@ -35,6 +35,13 @@ public class NodeTest {
 		Set<SourceNode<?>> sources = new HashSet<>();
 		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
 		sources.add(sourceNode);
+		NodeTesterObject node = new NodeTesterObject(network,sources, true);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNode_HasNullSources() {
+		Set<SourceNode<?>> sources = new HashSet<>();
+		sources.add(null);
 		NodeTesterObject node = new NodeTesterObject(network,sources, true);
 	}
 
