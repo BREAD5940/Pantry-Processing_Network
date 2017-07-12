@@ -12,8 +12,9 @@ public class SourceNodeTesterObject extends SourceNode<Integer> {
 
   @Override
   public Integer updateValue() {
-	  // TODO Auto-generated method stub
-	  return null;
+	  //For Testing Purposes
+	  int ret = 3;
+	  return ret;
   } 
  
 } 

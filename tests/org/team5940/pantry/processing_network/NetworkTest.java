@@ -87,6 +87,42 @@ public class NetworkTest {
 		assertTrue(node.didRun);
 	}
 	
+	@Test
+	public void testRun_WithMultipleNodes() throws InterruptedException {
+		Network network = new Network(3);
+		NodeTesterObject node = new NodeTesterObject(network,null, true);
+		NodeTesterObject node2 = new NodeTesterObject(network,null, true);
+		network.start();
+		Thread.sleep(100);
+		network.interrupt();
+		assertTrue(node.didRun);
+		assertTrue(node2.didRun);
+	}
+	
+	@Test
+	public void testRun_WithSourceNode() throws InterruptedException {
+		Network network = new Network(3);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
+		network.start();
+		Thread.sleep(100);
+		network.interrupt();
+		assertEquals(3,(int)sourceNode.value);
+	}
+	
+	@Test
+	public void testRun_WithNodeAndSourceNode() throws InterruptedException {
+		Network network = new Network(3);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
+		Set<SourceNode<?>> sources = new HashSet<>();
+		sources.add(sourceNode);
+		NodeTesterObject node = new NodeTesterObject(network,sources, true);
+		network.start();
+		Thread.sleep(100);
+		network.interrupt();
+	}
+	
+	
+	
 	//Michaels's Tests
 	
 	/*@org.junit.Test 
