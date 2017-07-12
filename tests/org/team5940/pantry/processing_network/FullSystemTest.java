@@ -17,7 +17,9 @@ public class FullSystemTest {
 	
 	@Test
 	public void testRun_WithNodeAndSourceNode() throws InterruptedException {
-		
+		Network network = new Network(3);
+		SourceNodeTesterObject sourceNode1 = new SourceNodeTesterObject(network, true, null);
+		new NodeTesterObject(network,true, sourceNode1);
 		
 		network.start();
 		Thread.sleep(100);
