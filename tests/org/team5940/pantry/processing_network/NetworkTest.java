@@ -39,7 +39,7 @@ public class NetworkTest {
 		network.addNode(null);
 	}
 	
-	@Test(expected=IllegalArgumentException.class) //Test needs to be removed
+	@Test(expected=IllegalArgumentException.class) //Test needs to be removed -- Node added to Network Automatically So this can't happen
 	public void testAddNode_WrongNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network diffNetwork = new Network(3);
@@ -47,7 +47,7 @@ public class NetworkTest {
 		diffNetwork.addNode(node);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IllegalArgumentException.class) // Talk to David about source nodes being across networks.
 	public void testAddNode_SourceNodeNotInNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network sourceNetwork = new Network(3);
@@ -65,6 +65,7 @@ public class NetworkTest {
 		sources.add(sourceNode);
 		NodeTesterObject node = new NodeTesterObject(network,sources, true);
 		assertTrue(network.nodes.contains(node));
+		assertTrue(network.nodes.contains(sourceNode));
 	}
 
 }
