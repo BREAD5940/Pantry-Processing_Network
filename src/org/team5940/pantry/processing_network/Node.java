@@ -40,6 +40,18 @@ public abstract class Node {
 	 */
 	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
 		
+		sources = checkNodeForErrors(network, sources);
+		
+		this.sources = sources;
+		this.network = network;
+		this.requireUpdate = requireUpdate;
+		this.network.addNode(this);
+		
+		
+	}
+
+	private Set<SourceNode<?>> checkNodeForErrors(Network network, Set<SourceNode<?>> sources)
+			throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
 			//TODO log
 			throw new IllegalArgumentException("Null Network");
@@ -59,13 +71,7 @@ public abstract class Node {
 				throw new IllegalArgumentException("SourceNode is Null");
 			}
 		}
-		
-		this.sources = sources;
-		this.network = network;
-		this.requireUpdate = requireUpdate;
-		this.network.addNode(this);
-		
-		
+		return sources;
 	}
 	
 	/**
