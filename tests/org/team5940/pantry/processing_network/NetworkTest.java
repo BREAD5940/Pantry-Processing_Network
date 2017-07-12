@@ -72,7 +72,7 @@ public class NetworkTest {
 	
 	//Michaels's Tests
 	
-	@org.junit.Test 
+	/*@org.junit.Test 
 	  public void testNetworkUpdateRate() { 
 	    Network networkZeroUpdate = new Network(0); 
 	    testNetwork(networkZeroUpdate, 0); 
@@ -107,6 +107,6 @@ public class NetworkTest {
 	    Node node = new NodeTestImplementation(network, true, source); 
 //	    Node node = new NodeTestImplementation(network, null, true, null) 
 	    network.run(); 
-	  } 
+	  } */
 
 }
