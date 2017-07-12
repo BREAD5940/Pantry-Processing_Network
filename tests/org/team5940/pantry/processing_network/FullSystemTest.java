@@ -98,8 +98,14 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 	
 	@Override
 	  public Integer[] updateValue() {
+		try {
 			Integer[] values = { leftInput.getValue(), rightInput.getValue()};
 			return values;
+		}
+		catch (Exception e) {
+			
+		}
+		return null;
 	  } 
 
 }
