@@ -1,4 +1,3 @@
-package org.team5940.pantry.processing_network;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -89,7 +88,7 @@ public class Network extends Thread {
 			long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
 			if (extraTime > 0) {
 				try {
-					Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000));
+					Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
 				} catch (InterruptedException e) {
 					//TODO log
 				}
@@ -105,6 +104,11 @@ public class Network extends Thread {
 	 * @throws IllegalArgumentException node is null, this isn't its network, or it enumerates sources that aren't a part of this network.
 	 */
 	protected synchronized void addNode(Node node) throws IllegalStateException, IllegalArgumentException {
+		checkNodeForErrors(node);
+		this.nodes.add(node);
+	}
+	
+	private void checkNodeForErrors(Node node) {
 		if (this.getState() != Thread.State.NEW){
 			//TODO log
 			throw new IllegalStateException("Network Already Started");
@@ -123,7 +127,6 @@ public class Network extends Thread {
 				throw new IllegalArgumentException("Node Source Not In Network");
 			}
 		}
-		this.nodes.add(node);
 	}
 
 	/**
