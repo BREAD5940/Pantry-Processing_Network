@@ -74,27 +74,43 @@ public class Network extends Thread {
 	public void run() {
 		this.startTime = microTime();
 		while (!this.isInterrupted()) {
-			this.lastCycleStart = microTime();
-			this.currentCycle++;
-			for (Node node : this.nodes) {
-				if (node.requiresUpdate()) {
-					try {
-						node.update();
-					} catch (IllegalUpdateThreadException e) {
-						//TODO log
-					}
-				}
+			updateCycleStartInformation();
+			runNodeUpdates();
+			updateCycleEndInformationAndWaitCycleDelayPeriod();
+		}
+	}
+	
+	private void updateCycleEndInformationAndWaitCycleDelayPeriod() {
+		long cycleEndTime = microTime();
+		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
+		
+		waitCycleDelayPeriod(extraTime);
+	}
+
+	private void waitCycleDelayPeriod(long extraTime) {
+		if (extraTime > 0) {
+			try {
+				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
+			} catch (InterruptedException e) {
+				//TODO log
 			}
-			long cycleEndTime = microTime();
-			long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
-			if (extraTime > 0) {
+		}
+	}
+	
+	private void updateCycleStartInformation() {
+		this.lastCycleStart = microTime();
+		this.currentCycle++;
+	}
+	
+	private void runNodeUpdates() {
+		for (Node node : this.nodes) {
+			if (node.requiresUpdate()) {
 				try {
-					Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
-				} catch (InterruptedException e) {
+					node.update();
+				} catch (IllegalUpdateThreadException e) {
 					//TODO log
 				}
 			}
-			
 		}
 	}
 
