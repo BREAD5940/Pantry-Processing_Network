@@ -5,15 +5,20 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class FullSystemTest {
 
+	@BeforeClass
+	public static void SetupClass() {
+		
+	}
+	
 	@Test
 	public void testRun_WithNodeAndSourceNode() throws InterruptedException {
-		Network network = new Network(3);
-		SourceNodeTesterObject sourceNode1 = new SourceNodeTesterObject(network, true, null);
-		NodeTesterObject node = new NodeTesterObject(network,true, sourceNode1);
+		
+		
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
@@ -80,8 +85,8 @@ class TestDriveTrainMotorRight extends Node {
 
 class TestDriveTrain extends SourceNode<Integer[]> {
 
-	private SourceNode<?> rightInput;
-	private SourceNode<?> leftInput;
+	private SourceNode<Integer> rightInput;
+	private SourceNode<Integer> leftInput;
 
 	public TestDriveTrain(Network network, boolean requireUpdate, SourceNode<Integer> leftInput, SourceNode<Integer> rightInput)
 			throws IllegalArgumentException, IllegalStateException {
@@ -94,12 +99,13 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 	@Override
 	  public Integer[] updateValue() {
 		try {
-			Integer[] values = {(Integer) leftInput.getValue(), (Integer) rightInput.getValue()};
+			Integer[] values = { leftInput.getValue(), rightInput.getValue()};
 			return values;
-		}catch(Exception e){
-			//Log
 		}
-		return value;
+		catch (Exception e) {
+			
+		}
+		return null;
 	  } 
 
 }
