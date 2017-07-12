@@ -70,6 +70,23 @@ public class NetworkTest {
 		assertTrue(network.nodes.contains(sourceNode));
 	}
 	
+	@Test
+	public void testRun_StandardNoNodes() {
+		Network network = new Network(3);
+		network.start();
+		network.interrupt();
+	}
+	
+	@Test
+	public void testRun_WithNode() throws InterruptedException {
+		Network network = new Network(3);
+		NodeTesterObject node = new NodeTesterObject(network,null, true);
+		network.start();
+		Thread.sleep(100);
+		network.interrupt();
+		assertTrue(node.didRun);
+	}
+	
 	//Michaels's Tests
 	
 	/*@org.junit.Test 

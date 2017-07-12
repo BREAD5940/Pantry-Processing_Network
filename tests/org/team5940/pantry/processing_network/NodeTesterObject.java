@@ -8,6 +8,8 @@ import org.team5940.pantry.processing_network.SourceNode;
 
 public class NodeTesterObject extends Node{
 
+	boolean didRun = false;
+	
 	public NodeTesterObject(Network network, Set<SourceNode<?>> sources, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, sources, requireUpdate);
@@ -15,7 +17,7 @@ public class NodeTesterObject extends Node{
 
 	@Override
 	protected void doUpdate() {
-		System.out.println("Hello");
+		didRun = true;
 	}
 
 }
