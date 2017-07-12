@@ -83,7 +83,7 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 	private SourceNode<?> rightInput;
 	private SourceNode<?> leftInput;
 
-	public TestDriveTrain(Network network, boolean requireUpdate, SourceNode<?> leftInput, SourceNode<?> rightInput)
+	public TestDriveTrain(Network network, boolean requireUpdate, SourceNode<Integer> leftInput, SourceNode<Integer> rightInput)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, requireUpdate, leftInput, rightInput);
 		// TODO Auto-generated constructor stub
@@ -93,8 +93,13 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 	
 	@Override
 	  public Integer[] updateValue() {
-		Integer[] values = {(Integer) leftInput.getValue(), (Integer) rightInput.getValue()};
-		return values;
+		try {
+			Integer[] values = {(Integer) leftInput.getValue(), (Integer) rightInput.getValue()};
+			return values;
+		}catch(Exception e){
+			//Log
+		}
+		return value;
 	  } 
 
 }
