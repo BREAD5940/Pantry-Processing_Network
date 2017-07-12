@@ -2,13 +2,14 @@ package org.team5940.pantry.processing_network;
  
 import java.util.Arrays; 
 import java.util.HashSet; 
-import java.util.Set; 
+import java.util.Set;
+
+import org.team5940.pantry.processing_network.IllegalUpdateThreadException;
+import org.team5940.pantry.processing_network.Network;
+import org.team5940.pantry.processing_network.Node;
+import org.team5940.pantry.processing_network.SourceNode;
+
 import static org.junit.Assert.*; 
- 
-import org.team5940.pantry.processing_network.IllegalUpdateThreadException; 
-import org.team5940.pantry.processing_network.Network; 
-import org.team5940.pantry.processing_network.Node; 
-import org.team5940.pantry.processing_network.SourceNode; 
  
 public class NodeTestImplementation extends Node { 
    

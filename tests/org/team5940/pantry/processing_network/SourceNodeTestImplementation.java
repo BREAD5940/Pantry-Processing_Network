@@ -1,6 +1,6 @@
 package org.team5940.pantry.processing_network; 
  
-import org.team5940.pantry.processing_network.Network; 
+import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.SourceNode; 
  
 public class SourceNodeTestImplementation extends SourceNode<Integer> { 
