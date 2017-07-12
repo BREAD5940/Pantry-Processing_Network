@@ -29,7 +29,7 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * 
 	 * @return The new value.
 	 */
-	abstract T updateValue();
+	protected abstract T updateValue();
 
 	/**
 	 * Runs updateValue() and caches what it returns. Also logs it.

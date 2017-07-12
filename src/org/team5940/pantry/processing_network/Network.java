@@ -89,7 +89,7 @@ public class Network extends Thread {
 			long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
 			if (extraTime > 0) {
 				try {
-					Thread.sleep(extraTime/1000, (int) ((extraTime-(extraTime/1000))*1000));
+					Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
 				} catch (InterruptedException e) {
 					//TODO log
 				}

@@ -55,14 +55,15 @@ public abstract class Node {
 		}
 		
 		for(SourceNode<?> sourceNode:sources) {
-			if(sourceNode == null)
+			if(sourceNode == null) {
 				throw new IllegalArgumentException("SourceNode is Null");
+			}
 		}
 		
 		this.sources = sources;
 		this.network = network;
-		this.network.addNode(this);
 		this.requireUpdate = requireUpdate;
+		this.network.addNode(this);
 		
 		
 	}
