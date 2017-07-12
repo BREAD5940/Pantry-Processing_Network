@@ -1,6 +1,8 @@
 package org.team5940.pantry.processing_network;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -38,9 +40,11 @@ public abstract class Node {
 	 * @throws IllegalArgumentException network is null, or one of the {@link SourceNode}s in source is null.
 	 * @throws IllegalStateException network has already been started.
 	 */
-	public Node(Network network, Set<SourceNode<?>> sources, boolean requireUpdate) throws IllegalArgumentException, IllegalStateException {
+	public Node(Network network, boolean requireUpdate, SourceNode<?>... sourcesArray) throws IllegalArgumentException, IllegalStateException {
 		
-		sources = checkNodeForErrors(network, sources);
+		Set<SourceNode<?>> sources = generateSourcesSetFromArray(sourcesArray);
+		
+		checkNodeForErrors(network, sources);
 		
 		this.sources = sources;
 		this.network = network;
@@ -50,7 +54,17 @@ public abstract class Node {
 		
 	}
 
-	private Set<SourceNode<?>> checkNodeForErrors(Network network, Set<SourceNode<?>> sources)
+	private Set<SourceNode<?>> generateSourcesSetFromArray(SourceNode<?>... sourcesArray) {
+		Set<SourceNode<?>> sources = new HashSet<SourceNode<?>>();
+		for(SourceNode<?> source: sourcesArray) {
+			if(source != null) {
+				sources.add(source);
+			}
+		}
+		return sources;
+	}
+
+	private void checkNodeForErrors(Network network, Set<SourceNode<?>> sources)
 			throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
 			//TODO log
@@ -62,16 +76,11 @@ public abstract class Node {
 			throw new IllegalStateException("Network Already Started");
 		}
 		
-		if(sources == null) {
-			sources = new HashSet<>();
-		}
-		
 		for(SourceNode<?> sourceNode:sources) {
 			if(sourceNode == null) {
 				throw new IllegalArgumentException("SourceNode is Null");
 			}
 		}
-		return sources;
 	}
 	
 	/**

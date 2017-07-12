@@ -16,33 +16,18 @@ public class NodeTest {
 	
 	@Test
 	public void testNode_NoUpdateAlsoNoSources() {
-		NodeTesterObject node = new NodeTesterObject(network,null, false);
+		NodeTesterObject node = new NodeTesterObject(network, false, null);
 	}
 	
 	@Test
 	public void testNode_DoesUpdateAlsoNoSources() {
-		NodeTesterObject node = new NodeTesterObject(network,null, true);
-	}
-	
-	@Test
-	public void testNode_DoesUpdateAlsoEmptySources() {
-		Set<SourceNode<?>> sources = new HashSet<>();
-		NodeTesterObject node = new NodeTesterObject(network,sources, true);
+		NodeTesterObject node = new NodeTesterObject(network, true, null);
 	}
 	
 	@Test
 	public void testNode_HasSources() {
-		Set<SourceNode<?>> sources = new HashSet<>();
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
-		sources.add(sourceNode);
-		NodeTesterObject node = new NodeTesterObject(network,sources, true);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testNode_HasNullSources() {
-		Set<SourceNode<?>> sources = new HashSet<>();
-		sources.add(null);
-		NodeTesterObject node = new NodeTesterObject(network,sources, true);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true, null);
+		NodeTesterObject node = new NodeTesterObject(network,true, sourceNode);
 	}
 
 }

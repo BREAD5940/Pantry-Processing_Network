@@ -31,7 +31,7 @@ public class NetworkTest {
 	@Test
 	public void testAddNode_WithoutSources() {
 		Network network = new Network(3);
-		NodeTesterObject node = new NodeTesterObject(network,null, true);
+		NodeTesterObject node = new NodeTesterObject(network, true, null);
 		assertTrue(network.nodes.contains(node));
 	}
 	
@@ -45,7 +45,7 @@ public class NetworkTest {
 	public void testAddNode_WrongNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network diffNetwork = new Network(3);
-		NodeTesterObject node = new NodeTesterObject(nodeNetwork,null, true);
+		NodeTesterObject node = new NodeTesterObject(nodeNetwork, true, null);
 		diffNetwork.addNode(node);
 	}
 	
@@ -53,19 +53,15 @@ public class NetworkTest {
 	public void testAddNode_SourceNodeNotInNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network sourceNetwork = new Network(3);
-		Set<SourceNode<?>> sources = new HashSet<>();
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(sourceNetwork, true);
-		sources.add(sourceNode);
-		NodeTesterObject node = new NodeTesterObject(nodeNetwork,sources, true);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(sourceNetwork, true, null);
+		NodeTesterObject node = new NodeTesterObject(nodeNetwork,true, sourceNode);
 	}
 	
 	@Test
 	public void testAddNode_WithSources() {
 		Network network = new Network(3);
-		Set<SourceNode<?>> sources = new HashSet<>();
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
-		sources.add(sourceNode);
-		NodeTesterObject node = new NodeTesterObject(network,sources, true);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true, null);
+		NodeTesterObject node = new NodeTesterObject(network, true, sourceNode);
 		assertTrue(network.nodes.contains(node));
 		assertTrue(network.nodes.contains(sourceNode));
 	}
@@ -80,7 +76,7 @@ public class NetworkTest {
 	@Test
 	public void testRun_WithNode() throws InterruptedException {
 		Network network = new Network(3);
-		NodeTesterObject node = new NodeTesterObject(network,null, true);
+		NodeTesterObject node = new NodeTesterObject(network, true, null);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
@@ -90,8 +86,8 @@ public class NetworkTest {
 	@Test
 	public void testRun_WithMultipleNodes() throws InterruptedException {
 		Network network = new Network(3);
-		NodeTesterObject node = new NodeTesterObject(network,null, true);
-		NodeTesterObject node2 = new NodeTesterObject(network,null, true);
+		NodeTesterObject node = new NodeTesterObject(network, true, null);
+		NodeTesterObject node2 = new NodeTesterObject(network,true, null);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
@@ -102,25 +98,12 @@ public class NetworkTest {
 	@Test
 	public void testRun_WithSourceNode() throws InterruptedException {
 		Network network = new Network(3);
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
+		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true, null);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
 		assertEquals(3,(int)sourceNode.value);
 	}
-	
-	@Test
-	public void testRun_WithNodeAndSourceNode() throws InterruptedException {
-		Network network = new Network(3);
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
-		Set<SourceNode<?>> sources = new HashSet<>();
-		sources.add(sourceNode);
-		NodeTesterObject node = new NodeTesterObject(network,sources, true);
-		network.start();
-		Thread.sleep(100);
-		network.interrupt();
-	}
-	
 	
 	
 	//Michaels's Tests

@@ -10,9 +10,9 @@ public class NodeTesterObject extends Node{
 
 	boolean didRun = false;
 	
-	public NodeTesterObject(Network network, Set<SourceNode<?>> sources, boolean requireUpdate)
+	public NodeTesterObject(Network network, boolean requireUpdate, SourceNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, sources, requireUpdate);
+		super(network, requireUpdate, source);
 	}
 
 	@Override

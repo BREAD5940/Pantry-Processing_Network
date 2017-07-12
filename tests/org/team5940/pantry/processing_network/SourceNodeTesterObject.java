@@ -5,9 +5,9 @@ import org.team5940.pantry.processing_network.SourceNode;
  
 public class SourceNodeTesterObject extends SourceNode<Integer> { 
  
-  public SourceNodeTesterObject(Network network, boolean requireUpdate) 
+  public SourceNodeTesterObject(Network network, boolean requireUpdate, SourceNode<?> source) 
       throws IllegalArgumentException, IllegalStateException { 
-    super(network, null, requireUpdate); 
+    super(network, requireUpdate, source); 
   }
 
   @Override

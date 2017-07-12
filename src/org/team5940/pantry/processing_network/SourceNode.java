@@ -1,7 +1,5 @@
 package org.team5940.pantry.processing_network;
 
-import java.util.Set;
-
 /**
  * A Node that stores data of type T. Data is updated once every Network cycle
  * at most. Data returned is a cached value of the data.
@@ -18,9 +16,9 @@ public abstract class SourceNode<T extends Object> extends Node {
 	T value;
 	
 	
-	public SourceNode(Network network, Set<SourceNode<?>> sources, boolean requireUpdate)
+	public SourceNode(Network network, boolean requireUpdate, SourceNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, sources, requireUpdate);
+		super(network, requireUpdate, sourcesArray);
 		// TODO Auto-generated constructor stub
 	}
 
