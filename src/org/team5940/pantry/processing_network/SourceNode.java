@@ -48,9 +48,13 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * @throws IllegalUpdateThreadException 
 	 */
 	public T getValue() throws IllegalUpdateThreadException {
+		updateIfInCurrentThread();
+		return this.value;
+	}
+
+	private void updateIfInCurrentThread() throws IllegalUpdateThreadException {
 		if (this.getNetwork() == Thread.currentThread()) { 
 			update();
 		}
-		return this.value;
 	}
 }
