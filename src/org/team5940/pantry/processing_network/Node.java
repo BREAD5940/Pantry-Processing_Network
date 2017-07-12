@@ -85,12 +85,16 @@ public abstract class Node {
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 		if(this.network == Thread.currentThread()) {
-			if(this.network.getLastCycle() != this.lastUpdate) {//They would both be -1 if the network hasn't been started but it shouldn't get there without it being started due to the previous line.
-				this.doUpdate();
-				this.lastUpdate = this.network.getLastCycle();//lastUpdate only changes after update completes.
-			}
+			updateNodeIfNotYetUpdatedThisCycle();
 		}else {
 			throw new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString());
+		}
+	}
+
+	private void updateNodeIfNotYetUpdatedThisCycle() {
+		if(this.network.getLastCycle() != this.lastUpdate) {//They would both be -1 if the network hasn't been started but it shouldn't get there without it being started due to the previous line.
+			this.doUpdate();
+			this.lastUpdate = this.network.getLastCycle();//lastUpdate only changes after update completes.
 		}
 	}
 	
