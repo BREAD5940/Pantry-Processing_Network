@@ -21,7 +21,7 @@ public class NetworkTest {
 	}
 	
 	@Test
-	public void testGetCycleDelay() {
+	public void testGetCycleDelay_Success() {
 		Network network = new Network(3);
 		assertEquals(3,network.getCycleDelay());
 	}
@@ -30,7 +30,6 @@ public class NetworkTest {
 	public void testAddNode_WithoutSources() {
 		Network network = new Network(3);
 		NodeTesterObject node = new NodeTesterObject(network,null, true);
-		network.addNode(node);
 		assertTrue(network.nodes.contains(node));
 	}
 	
@@ -40,7 +39,7 @@ public class NetworkTest {
 		network.addNode(null);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IllegalArgumentException.class) //Test needs to be removed
 	public void testAddNode_WrongNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network diffNetwork = new Network(3);
@@ -56,7 +55,6 @@ public class NetworkTest {
 		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(sourceNetwork, true);
 		sources.add(sourceNode);
 		NodeTesterObject node = new NodeTesterObject(nodeNetwork,sources, true);
-		nodeNetwork.addNode(node);
 	}
 	
 	@Test
@@ -66,7 +64,6 @@ public class NetworkTest {
 		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true);
 		sources.add(sourceNode);
 		NodeTesterObject node = new NodeTesterObject(network,sources, true);
-		network.addNode(node);
 		assertTrue(network.nodes.contains(node));
 	}
 
