@@ -5,7 +5,7 @@ package org.team5940.pantry.processing_network;
  * @author David Boles
  *
  */
-public class IllegalUpdateThreadException extends Exception {
+public class IllegalUpdateThreadException extends RuntimeException {
 	
 	private static final long serialVersionUID = 4200120984195754803L;
 

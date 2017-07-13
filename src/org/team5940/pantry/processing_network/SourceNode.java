@@ -43,14 +43,13 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * Gets the current value cached by the ValueNode.
 	 * 
 	 * @return The current cached value.
-	 * @throws IllegalUpdateThreadException 
 	 */
-	public T getValue() throws IllegalUpdateThreadException {
+	public T getValue() {
 		updateIfInCurrentThread();
 		return this.value;
 	}
 
-	private void updateIfInCurrentThread() throws IllegalUpdateThreadException {
+	private void updateIfInCurrentThread() {
 		if (this.getNetwork() == Thread.currentThread()) { 
 			update();
 		}
