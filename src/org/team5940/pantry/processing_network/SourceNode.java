@@ -45,13 +45,9 @@ public abstract class SourceNode<T extends Object> extends Node {
 	 * @return The current cached value.
 	 */
 	public T getValue() {
-		updateIfInCurrentThread();
-		return this.value;
-	}
-
-	private void updateIfInCurrentThread() {
 		if (this.getNetwork() == Thread.currentThread()) { 
 			update();
 		}
+		return this.value;
 	}
 }
