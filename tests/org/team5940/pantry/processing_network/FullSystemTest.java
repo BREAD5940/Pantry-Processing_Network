@@ -10,18 +10,23 @@ import org.junit.Test;
 
 public class FullSystemTest {
 
-	@BeforeClass
-	public static void SetupClass() {
-		
-	}
+	Network network = new Network(1);
+	TestControllerRightJoystick rightJoyStick = new TestControllerRightJoystick(network,false);
+	TestControllerLeftJoystick leftJoyStick = new TestControllerLeftJoystick(network, false);
+	TestDriveTrain driveTrain = new TestDriveTrain(network, false, leftJoyStick, rightJoyStick);
+	TestDriveTrainMotorLeft leftMotor = new TestDriveTrainMotorLeft(network, true, driveTrain);
+	TestDriveTrainMotorRight rightMotor = new TestDriveTrainMotorRight(network, true, driveTrain);
 	
 	@Test
 	public void testRun_WithNodeAndSourceNode() throws InterruptedException {
 		
-		
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
+		
+		assertEquals(3, rightMotor.speed);
+		assertEquals(1, leftMotor.speed);
+		
 	}
 
 }
@@ -49,9 +54,6 @@ class TestDriveTrainMotorLeft extends Node {
 		} catch (IllegalUpdateThreadException e) {
 			// TODO Auto-generated catch block
 		}
-		
-		
-		
 
 	}
 
@@ -132,7 +134,7 @@ class TestControllerRightJoystick extends SourceNode<Integer>{
 		if (first)
 			return 2;
 		else
-			return 0;
+			return 3;
 	}
 }
 
@@ -158,6 +160,6 @@ class TestControllerLeftJoystick extends SourceNode<Integer>{
 		if (first)
 			return -1;
 		else
-			return 0;
+			return 1;
 	}
 }
