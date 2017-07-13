@@ -74,35 +74,25 @@ public class Network extends Thread {
 	public void run() {
 		this.startTime = microTime();
 		while (!this.isInterrupted()) {
-			updateCycleStartInformation();
+			startCycle();
 			runNodeUpdates();
-			updateCycleEndInformationAndWaitCycleDelayPeriod();
+			endCycleAndDelay();
 		}
 	}
 	
-	private void updateCycleEndInformationAndWaitCycleDelayPeriod() {
+	void startCycle() {
+		this.lastCycleStart = microTime();
+		this.currentCycle++;
+	}
+	
+	void endCycleAndDelay() {
 		long cycleEndTime = microTime();
 		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
 		
 		waitCycleDelayPeriod(extraTime);
 	}
-
-	private void waitCycleDelayPeriod(long extraTime) {
-		if (extraTime > 0) {
-			try {
-				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
-			} catch (InterruptedException e) {
-				//TODO log
-			}
-		}
-	}
 	
-	private void updateCycleStartInformation() {
-		this.lastCycleStart = microTime();
-		this.currentCycle++;
-	}
-	
-	private void runNodeUpdates() {
+	void runNodeUpdates() {
 		for (Node node : this.nodes) {
 			if (node.requiresUpdate()) {
 				try {
@@ -114,6 +104,16 @@ public class Network extends Thread {
 		}
 	}
 
+	void waitCycleDelayPeriod(long extraTime) {
+		if (extraTime > 0) {
+			try {
+				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
+			} catch (InterruptedException e) {
+				//TODO log
+			}
+		}
+	}
+
 	/**
 	 * Adds a Node for this Network.
 	 * @param node The Node to add to this Network.
@@ -121,11 +121,6 @@ public class Network extends Thread {
 	 * @throws IllegalArgumentException node is null, this isn't its network, or it enumerates sources that aren't a part of this network.
 	 */
 	protected synchronized void addNode(Node node) throws IllegalStateException, IllegalArgumentException {
-		checkNodeForErrors(node);
-		this.nodes.add(node);
-	}
-	
-	private void checkNodeForErrors(Node node) {
 		if (this.getState() != Thread.State.NEW){
 			//TODO log
 			throw new IllegalStateException("Network Already Started");
@@ -144,6 +139,7 @@ public class Network extends Thread {
 				throw new IllegalArgumentException("Node Source Not In Network");
 			}
 		}
+		this.nodes.add(node);
 	}
 
 	/**
