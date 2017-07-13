@@ -19,5 +19,8 @@ public class NodeTesterObject extends Node{
 	protected void doUpdate() {
 		didRun = true;
 	}
-
+	
+	public boolean getDidRun() {
+		return this.didRun;
+	}
 }
