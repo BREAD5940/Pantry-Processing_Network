@@ -1,8 +1,6 @@
 package org.team5940.pantry.processing_network;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -42,30 +40,8 @@ public abstract class Node {
 	 */
 	public Node(Network network, boolean requireUpdate, SourceNode<?>... sourcesArray) throws IllegalArgumentException, IllegalStateException {
 		
-		Set<SourceNode<?>> sources = generateSourcesSetFromArray(sourcesArray);
+		Set<SourceNode<?>> sources = generateSourcesSet(sourcesArray);
 		
-		checkNodeForErrors(network, sources);
-		
-		this.sources = sources;
-		this.network = network;
-		this.requireUpdate = requireUpdate;
-		this.network.addNode(this);
-		
-		
-	}
-
-	private Set<SourceNode<?>> generateSourcesSetFromArray(SourceNode<?>... sourcesArray) {
-		Set<SourceNode<?>> sources = new HashSet<SourceNode<?>>();
-		for(SourceNode<?> source: sourcesArray) {
-			if(source != null) {
-				sources.add(source);
-			}
-		}
-		return sources;
-	}
-
-	private void checkNodeForErrors(Network network, Set<SourceNode<?>> sources)
-			throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
 			//TODO log
 			throw new IllegalArgumentException("Null Network");
@@ -81,6 +57,23 @@ public abstract class Node {
 				throw new IllegalArgumentException("SourceNode is Null");
 			}
 		}
+		
+		this.sources = sources;
+		this.network = network;
+		this.requireUpdate = requireUpdate;
+		this.network.addNode(this);
+		
+		
+	}
+
+	Set<SourceNode<?>> generateSourcesSet(SourceNode<?>... sourcesArray) {
+		Set<SourceNode<?>> sources = new HashSet<SourceNode<?>>();
+		for(SourceNode<?> source: sourcesArray) {
+			if(source != null) {
+				sources.add(source);
+			}
+		}
+		return sources;
 	}
 	
 	/**
@@ -94,13 +87,13 @@ public abstract class Node {
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 		if(this.network == Thread.currentThread()) {
-			updateNodeIfNotYetUpdatedThisCycle();
+			updateYetUpdated();
 		}else {
 			throw new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString());
 		}
 	}
 
-	private void updateNodeIfNotYetUpdatedThisCycle() {
+	void updateYetUpdated() {
 		if(this.network.getLastCycle() != this.lastUpdate) {//They would both be -1 if the network hasn't been started but it shouldn't get there without it being started due to the previous line.
 			this.doUpdate();
 			this.lastUpdate = this.network.getLastCycle();//lastUpdate only changes after update completes.
