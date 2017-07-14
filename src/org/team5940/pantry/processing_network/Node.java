@@ -114,7 +114,7 @@ public abstract class Node {
 	}
 
 	/**
-	 * Gets the Nodes that this Node retrieves data from. Sources should not change after initialization. The set returned must be clone and not any internally used reference. If this does not have any sources it should return an empty Set, NOT null.
+	 * Gets the {@link SourceNode}s (within its network) that this Node retrieves data from. Sources should not change after initialization. The set returned must be clone and not any internally used reference. If this does not have any sources it should return an empty Set, NOT null.
 	 * @return A Set containing any Nodes that this uses.
 	 */
 	public Set<SourceNode<?>> enumerateSources() {
