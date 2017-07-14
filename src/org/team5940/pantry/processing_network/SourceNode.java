@@ -40,7 +40,7 @@ public abstract class SourceNode<T extends Object> extends Node {
 	}
 
 	/**
-	 * Gets the current value cached by the ValueNode.
+	 * If the current thread is this' network and this has not updated this cycle, this updates and caches its value. It then returns the last cached value.
 	 * 
 	 * @return The current cached value.
 	 */
