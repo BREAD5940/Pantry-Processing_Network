@@ -3,9 +3,11 @@ package org.team5940.pantry.processing_network;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 public class FullSystemTest {
 
-	Network network = new Network(150000);
+	Network network = new Network(200000);
 	TestControllerRightJoystick rightJoyStick = new TestControllerRightJoystick(network, false);
 	TestControllerLeftJoystick leftJoyStick = new TestControllerLeftJoystick(network, false);
 	TestDriveTrain driveTrain = new TestDriveTrain(network, false, leftJoyStick, rightJoyStick);
@@ -17,21 +19,26 @@ public class FullSystemTest {
 		network.start();
 		Thread.sleep(100);
 
-		assertEquals(2, rightMotor.speed);
-		assertEquals(-1, leftMotor.speed);
+		assertEquals(Integer.valueOf(2), rightMotor.getSpeed());
+		assertEquals(-1, leftMotor.getSpeed());
 
-		Thread.sleep(100);
+		Thread.sleep(200);
 
-		assertEquals(3, rightMotor.speed);
-		assertEquals(1, leftMotor.speed);
+		assertEquals(null, rightMotor.getSpeed());
+		assertEquals(1, leftMotor.getSpeed());
+		
+		Thread.sleep(200);
 
+		assertEquals(Integer.valueOf(3), rightMotor.getSpeed());
+		assertEquals(1, leftMotor.getSpeed());
+		
 		network.interrupt();
 	}
 }
 
 class TestDriveTrainMotorLeft extends Node {
 
-	int speed;
+	private int speed;
 	private SourceNode<Integer[]> driveTrain;
 
 	public TestDriveTrainMotorLeft(Network network, boolean requireUpdate, SourceNode<Integer[]> driveTrain)
@@ -45,11 +52,15 @@ class TestDriveTrainMotorLeft extends Node {
 		Integer[] driveTrainArray = driveTrain.getValue();
 		speed = driveTrainArray[0];
 	}
+	
+	public int getSpeed() {
+		return speed;
+	}
 }
 
 class TestDriveTrainMotorRight extends Node {
 
-	int speed;
+	private Integer speed;
 	private SourceNode<Integer[]> driveTrain;
 
 	public TestDriveTrainMotorRight(Network network, boolean requireUpdate, SourceNode<Integer[]> driveTrain)
@@ -64,6 +75,10 @@ class TestDriveTrainMotorRight extends Node {
 		Integer[] driveTrainArray = driveTrain.getValue();
 		speed = driveTrainArray[1];
 	}
+	
+	public Integer getSpeed() {
+		return speed;
+	}
 }
 
 class TestDriveTrain extends SourceNode<Integer[]> {
@@ -73,7 +88,7 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 
 	public TestDriveTrain(Network network, boolean requireUpdate, SourceNode<Integer> leftInput,
 			SourceNode<Integer> rightInput) throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate, leftInput, rightInput);
+		super(network, leftInput, rightInput);
 
 		this.rightInput = rightInput;
 		this.leftInput = leftInput;
@@ -88,24 +103,26 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 
 class TestControllerRightJoystick extends SourceNode<Integer> {
 
-	boolean firstCall = true;
+	int call = 0;
 
 	public TestControllerRightJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate);
+		super(network);
 	}
 
 	@Override
 	public Integer updateValue() {
-		value = getRightJoyStickInput(firstCall);
-		firstCall = false;
-
+		value = getRightJoyStickInput(call);
+		call++;
+		
 		return value;
 	}
 
-	Integer getRightJoyStickInput(boolean first) {
-		if (first)
+	Integer getRightJoyStickInput(int call) {
+		if (call == 0)
 			return 2;
+		else if (call == 1)
+			return null;
 		else
 			return 3;
 	}
@@ -117,7 +134,7 @@ class TestControllerLeftJoystick extends SourceNode<Integer> {
 
 	public TestControllerLeftJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate);
+		super(network);
 	}
 
 	@Override
