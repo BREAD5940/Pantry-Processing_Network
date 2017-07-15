@@ -9,16 +9,18 @@ package org.team5940.pantry.processing_network;
  * @param <T>
  */
 public abstract class SourceNode<T extends Object> extends Node {
-
+	// TODO rename to ValueNode
+	
+	
 	/**
 	 * Current value of the source.
 	 */
 	T value;
 	
 	
-	public SourceNode(Network network, boolean requireUpdate, SourceNode<?>... sourcesArray)
+	public SourceNode(Network network, SourceNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate, sourcesArray);
+		super(network, false, sourcesArray);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -30,17 +32,13 @@ public abstract class SourceNode<T extends Object> extends Node {
 	protected abstract T updateValue();
 
 	/**
-	 * Runs updateValue() and caches what it returns if not null. Also logs it.
+	 * Runs updateValue() and caches what it returns even if it is null. Also logs it.
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doUpdate() {
-		T value = this.updateValue();
-		if(value != null) {
-			this.value = value;
-		}else {
-			//TODO log
-		}
+		this.value = this.updateValue();
+		// TODO log
 	}
 
 	/**
