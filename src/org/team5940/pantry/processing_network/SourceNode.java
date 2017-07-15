@@ -23,26 +23,30 @@ public abstract class SourceNode<T extends Object> extends Node {
 	}
 
 	/**
-	 * Gets the new value for this SourceNode to store.
+	 * Gets the new value for this SourceNode to store. Cannot be null.
 	 * 
 	 * @return The new value.
 	 */
 	protected abstract T updateValue();
 
 	/**
-	 * Runs updateValue() and caches what it returns. Also logs it.
+	 * Runs updateValue() and caches what it returns if not null. Also logs it.
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doUpdate() {
-		// TODO log the new value. 
-		this.value = this.updateValue();
+		T value = this.updateValue();
+		if(value != null) {
+			this.value = value;
+		}else {
+			//TODO log
+		}
 	}
 
 	/**
 	 * If the current thread is this' network and this has not updated this cycle, this updates and caches its value. It then returns the last cached value.
 	 * 
-	 * @return The current cached value.
+	 * @return The current cached value, not null
 	 */
 	public T getValue() {
 		if (this.getNetwork() == Thread.currentThread()) { 
