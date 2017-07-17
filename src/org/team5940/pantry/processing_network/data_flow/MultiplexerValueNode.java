@@ -13,17 +13,11 @@ public class MultiplexerValueNode<T, S> extends SourceNode<T> {
 
 	public MultiplexerValueNode(Network network, SourceNode<Enum<? extends S>> stateSource,
 			SourceNode<? extends T>... valueSources) throws IllegalArgumentException, IllegalStateException {
-		super(network, new HashSet<SourceNode>() {
-			{
-				add(stateSource);
-				addAll(Arrays.asList(valueSources));
-			}
-		}.toArray(new SourceNode[valueSources.length + 1]));
+		super(network, NodeUtils.appendValueToArray(stateSource, valueSources));
 	}
 
 	@Override
 	protected T updateValue() {
 		return null;
 	}
-
 }
