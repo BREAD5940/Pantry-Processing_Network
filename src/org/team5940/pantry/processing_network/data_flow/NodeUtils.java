@@ -5,11 +5,13 @@ import java.util.Arrays;
 
 public class NodeUtils {
 
-	public static <T extends Object> T[] appendValueToArray(T value, T... array) {
-		T[] newArray = Arrays.copyOf(array, array.length + 1);
-		newArray[array.length] = value;
+	public static <T extends Object> T[] mergeArrays(T[] array1, T... array2) {
+		T[] newArray = Arrays.copyOf(array1, array1.length + array2.length);
+		
+		for (int i = 0; i < array2.length; i++) {
+			newArray[i + array1.length] = array2[i];
+		}
 		
 		return newArray;
 	}
-
 }
