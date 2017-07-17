@@ -6,8 +6,6 @@ import java.util.Arrays;
 public class NodeUtils {
 
 	public static <T extends Object> T[] appendValueToArray(T value, T... array) {
-		
-		
 		T[] newArray = Arrays.copyOf(array, array.length + 1);
 		newArray[array.length] = value;
 		
