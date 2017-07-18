@@ -18,7 +18,7 @@ public abstract class Node {
 	/**
 	 * Stores the SourceNodes to return a copy of in enumerateSources().
 	 */
-	Set<SourceNode<?>> sources;
+	Set<ValueNode<?>> sources;
 	
 	/**
 	 * Whether this requires an update by default.
@@ -33,14 +33,14 @@ public abstract class Node {
 	/**
 	 * Initialize a new Node.
 	 * @param network The {@link Network} that this node is a part of.
-	 * @param sources The {@link SourceNode}s used by this, if null assumes no sources.
+	 * @param sources The {@link ValueNode}s used by this, if null assumes no sources.
 	 * @param requireUpdate Whether to, by default, require updates. The requiresUpdate() method can always be overridden to change behavior.
-	 * @throws IllegalArgumentException network is null, or one of the {@link SourceNode}s in source is null.
+	 * @throws IllegalArgumentException network is null, or one of the {@link ValueNode}s in source is null.
 	 * @throws IllegalStateException network has already been started.
 	 */
-	public Node(Network network, boolean requireUpdate, SourceNode<?>... sourcesArray) throws IllegalArgumentException, IllegalStateException {
+	public Node(Network network, boolean requireUpdate, ValueNode<?>... sourcesArray) throws IllegalArgumentException, IllegalStateException {
 		
-		Set<SourceNode<?>> sources = generateSourcesSet(sourcesArray);
+		Set<ValueNode<?>> sources = generateSourcesSet(sourcesArray);
 		
 		argumentCheckForNodeConstructor(network, sources);
 		
@@ -52,7 +52,7 @@ public abstract class Node {
 		
 	}
 
-	private void argumentCheckForNodeConstructor(Network network, Set<SourceNode<?>> sources)
+	private void argumentCheckForNodeConstructor(Network network, Set<ValueNode<?>> sources)
 			throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
 			//TODO log
@@ -64,16 +64,16 @@ public abstract class Node {
 			throw new IllegalStateException("Network Already Started");
 		}
 		
-		for(SourceNode<?> sourceNode:sources) {
+		for(ValueNode<?> sourceNode:sources) {
 			if(sourceNode == null) {
 				throw new IllegalArgumentException("SourceNode is Null");
 			}
 		}
 	}
 
-	Set<SourceNode<?>> generateSourcesSet(SourceNode<?>... sourcesArray) {
-		Set<SourceNode<?>> sources = new HashSet<SourceNode<?>>();
-		for(SourceNode<?> source: sourcesArray) {
+	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
+		Set<ValueNode<?>> sources = new HashSet<ValueNode<?>>();
+		for(ValueNode<?> source: sourcesArray) {
 			if(source != null) {
 				sources.add(source);
 			}
@@ -114,11 +114,11 @@ public abstract class Node {
 	}
 
 	/**
-	 * Gets the {@link SourceNode}s (within its network) that this Node retrieves data from. Sources should not change after initialization. The set returned must be clone and not any internally used reference. If this does not have any sources it should return an empty Set, NOT null.
+	 * Gets the {@link ValueNode}s (within its network) that this Node retrieves data from. Sources should not change after initialization. The set returned must be clone and not any internally used reference. If this does not have any sources it should return an empty Set, NOT null.
 	 * @return A Set containing any Nodes that this uses.
 	 */
-	public Set<SourceNode<?>> enumerateSources() {
-		HashSet<SourceNode<?>> out = new HashSet<>();
+	public Set<ValueNode<?>> enumerateSources() {
+		HashSet<ValueNode<?>> out = new HashSet<>();
 		synchronized (this.sources) {
 				this.sources.forEach(node -> out.add(node));
 		}

@@ -39,9 +39,9 @@ public class FullSystemTest {
 class TestDriveTrainMotorLeft extends Node {
 
 	private int speed;
-	private SourceNode<Integer[]> driveTrain;
+	private ValueNode<Integer[]> driveTrain;
 
-	public TestDriveTrainMotorLeft(Network network, boolean requireUpdate, SourceNode<Integer[]> driveTrain)
+	public TestDriveTrainMotorLeft(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, requireUpdate, driveTrain);
 		this.driveTrain = driveTrain;
@@ -61,9 +61,9 @@ class TestDriveTrainMotorLeft extends Node {
 class TestDriveTrainMotorRight extends Node {
 
 	private Integer speed;
-	private SourceNode<Integer[]> driveTrain;
+	private ValueNode<Integer[]> driveTrain;
 
-	public TestDriveTrainMotorRight(Network network, boolean requireUpdate, SourceNode<Integer[]> driveTrain)
+	public TestDriveTrainMotorRight(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, requireUpdate, driveTrain);
 
@@ -81,13 +81,13 @@ class TestDriveTrainMotorRight extends Node {
 	}
 }
 
-class TestDriveTrain extends SourceNode<Integer[]> {
+class TestDriveTrain extends ValueNode<Integer[]> {
 
-	private SourceNode<Integer> rightInput;
-	private SourceNode<Integer> leftInput;
+	private ValueNode<Integer> rightInput;
+	private ValueNode<Integer> leftInput;
 
-	public TestDriveTrain(Network network, boolean requireUpdate, SourceNode<Integer> leftInput,
-			SourceNode<Integer> rightInput) throws IllegalArgumentException, IllegalStateException {
+	public TestDriveTrain(Network network, boolean requireUpdate, ValueNode<Integer> leftInput,
+			ValueNode<Integer> rightInput) throws IllegalArgumentException, IllegalStateException {
 		super(network, leftInput, rightInput);
 
 		this.rightInput = rightInput;
@@ -101,7 +101,7 @@ class TestDriveTrain extends SourceNode<Integer[]> {
 	}
 }
 
-class TestControllerRightJoystick extends SourceNode<Integer> {
+class TestControllerRightJoystick extends ValueNode<Integer> {
 
 	int call = 0;
 
@@ -128,7 +128,7 @@ class TestControllerRightJoystick extends SourceNode<Integer> {
 	}
 }
 
-class TestControllerLeftJoystick extends SourceNode<Integer> {
+class TestControllerLeftJoystick extends ValueNode<Integer> {
 
 	boolean firstCall = true;
 

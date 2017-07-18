@@ -13,7 +13,7 @@ import java.util.HashSet;
  * 	cycles may occur more slowly than specified but they will never occur more quickly. For timing needs inside of Nodes, {@link Network#getNetworkTime()} is available.
  * <br><br>
  * Nodes are added to a network automatically when they are initialized (as long as the network has not already been started).
- * Nodes must declare on initialization any {@link SourceNode}s they utilize which forces them to form a directed acyclic graph: no "looping" dependencies are present.
+ * Nodes must declare on initialization any {@link ValueNode}s they utilize which forces them to form a directed acyclic graph: no "looping" dependencies are present.
  * This is necessary due to the "internally instantaneous" nature of network cycles, you cannot have operations that (indirectly) rely on themselves: the cycle would never
  * 	complete.
  * <br><br>

@@ -1,13 +1,13 @@
 package org.team5940.pantry.processing_network;
 
 import org.team5940.pantry.processing_network.Network;
-import org.team5940.pantry.processing_network.SourceNode;
+import org.team5940.pantry.processing_network.ValueNode;
 
-public class SourceNodeTesterObject extends SourceNode<Integer> {
+public class SourceNodeTesterObject extends ValueNode<Integer> {
 	
 	boolean requiresUpdate;
 
-	public SourceNodeTesterObject(Network network, boolean requireUpdate, SourceNode<?> source)
+	public SourceNodeTesterObject(Network network, boolean requireUpdate, ValueNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, source);
 		this.requiresUpdate = requireUpdate;

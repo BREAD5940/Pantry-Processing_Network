@@ -4,13 +4,13 @@ import java.util.Set;
 
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.Node;
-import org.team5940.pantry.processing_network.SourceNode;
+import org.team5940.pantry.processing_network.ValueNode;
 
 public class NodeTesterObject extends Node{
 
 	boolean didRun = false;
 	
-	public NodeTesterObject(Network network, boolean requireUpdate, SourceNode<?> source)
+	public NodeTesterObject(Network network, boolean requireUpdate, ValueNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, requireUpdate, source);
 	}

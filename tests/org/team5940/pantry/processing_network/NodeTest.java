@@ -8,7 +8,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.Node;
-import org.team5940.pantry.processing_network.SourceNode;
+import org.team5940.pantry.processing_network.ValueNode;
 
 public class NodeTest {
 	
