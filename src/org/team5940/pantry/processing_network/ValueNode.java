@@ -8,9 +8,7 @@ package org.team5940.pantry.processing_network;
  *
  * @param <T>
  */
-public abstract class ValueNode<T extends Object> extends Node {
-	// TODO rename to ValueNode
-	
+public abstract class ValueNode<T extends Object> extends Node {	
 	
 	/**
 	 * Current value of the source.
