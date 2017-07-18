@@ -26,8 +26,7 @@ public class MultiplexerValueNode<T, S> extends ValueNode<T> {
 	public MultiplexerValueNode(Network network, ValueNode<Enum<? extends S>> stateSource,
 			Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, NodeUtils.mergeArrays(new ValueNode[] { stateSource },
-				valueSourcesMap.values().toArray(new ValueNode[valueSourcesMap.size()])));
+		super(network, NodeUtils.mergeArrays(valueSourcesMap.values().toArray(new ValueNode[valueSourcesMap.size()]), stateSource));
 		this.stateSource = stateSource;
 		this.valueSourcesMap = valueSourcesMap;
 	}
@@ -35,8 +34,6 @@ public class MultiplexerValueNode<T, S> extends ValueNode<T> {
 	@Override
 	protected T updateValue() {
 		Enum<? extends S> currentEnum = this.stateSource.getValue();
-		if (currentEnum == null)
-			return null;
 		ValueNode<? extends T> sourceNode = this.valueSourcesMap.get(currentEnum);
 		return (sourceNode != null) ? sourceNode.getValue() : null;
 	}
