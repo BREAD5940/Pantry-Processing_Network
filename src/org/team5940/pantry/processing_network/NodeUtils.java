@@ -1,7 +1,5 @@
 package org.team5940.pantry.processing_network;
 
-import java.util.Arrays;
-
 /**
  * Various utilities that Nodes may need to use.  
  * 
@@ -9,23 +7,66 @@ import java.util.Arrays;
  *
  */
 public class NodeUtils {
-
+	
 	/**
-	 * Merges two arrays of type T.
-	 * 
-	 * @param array1
-	 *            One array of type T.
-	 * @param array2
-	 *            An varargs (the ... or a fancy array) of type T.
-	 * @return The merged arrays.
+	 * This is a static utility method for constructing the array of value nodes that is passed to the Node class on initialization of a subclass. If any node passed in is null, the method simply returns a new empty array, leaving the checking and exception throwing to you (the person writing a constructor).
+	 * @param node A {@link ValueNode} to add to the returned array.
+	 * @param nodes {@link ValueNode}(s) to add to the returned array.
+	 * @return An array of {@link ValueNode}s containing node and the contents of nodes unless either of them was/ contained null (in which case an empty array).
 	 */
-	public static <T extends Object> T[] mergeArrays(T[] array1, T... array2) {
-		T[] newArray = Arrays.copyOf(array1, array1.length + array2.length);
-
-		for (int i = 0; i < array2.length; i++) {
-			newArray[i + array1.length] = array2[i];
+	public static ValueNode<?>[] concatValueNodes(ValueNode<?> node, ValueNode<?>... nodes) {
+		if(node != null && nodes != null) {
+			for(ValueNode<?> containedNode : nodes) {
+				if(containedNode == null) {
+					return new ValueNode<?>[0];
+				}
+			}
+			
+			ValueNode<?>[] out = new ValueNode<?>[nodes.length + 1];
+			
+			out[0] = node;
+			for(int i = 1; i < out.length; i++) {
+				out[i] = nodes[i-1];
+			}
+			
+			return out;
+		}else {
+			return new ValueNode<?>[0];
 		}
-
-		return newArray;
+	}
+	
+	/**
+	 * This is a static utility method for constructing the array of value nodes that is passed to the Node class on initialization of a subclass. If any node passed in is null, the method simply returns a new empty array, leaving the checking and exception throwing to you (the person writing a constructor).
+	 * @param nodeArray A {@link ValueNode}s to add to the returned array.
+	 * @param nodes {@link ValueNode}(s) to add to the returned array.
+	 * @return An array of {@link ValueNode}s containing the contents of nodeArray and nodes unless either of them was/ contained null (in which case an empty array).
+	 */
+	public static ValueNode<?>[] concatValueNodes(ValueNode<?>[] nodeArray, ValueNode<?>... nodes) {
+		if(nodeArray != null && nodes != null) {
+			for(ValueNode<?> containedNode : nodeArray) {
+				if(containedNode == null) {
+					return new ValueNode<?>[0];
+				}
+			}
+			
+			for(ValueNode<?> containedNode : nodes) {
+				if(containedNode == null) {
+					return new ValueNode<?>[0];
+				}
+			}
+			
+			ValueNode<?>[] out = new ValueNode<?>[nodeArray.length + nodes.length];
+			
+			for(int i = 0; i < nodeArray.length; i++) {
+				out[i] = nodeArray[i];
+			}
+			for(int i = nodeArray.length; i < nodeArray.length + nodes.length; i++) {
+				out[i] = nodes[i-nodeArray.length];
+			}
+			
+			return out;
+		}else {
+			return new ValueNode<?>[0];
+		}
 	}
 }
