@@ -1,5 +1,8 @@
 package org.team5940.pantry.processing_network;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * Various utilities that Nodes may need to use.  
  * 
@@ -68,5 +71,34 @@ public class NodeUtils {
 		}else {
 			return new ValueNode<?>[0];
 		}
+	}
+	
+	/**
+	 * This is a static utility method for constructing the array of value nodes that is passed to the Node class on initialization of a subclass. If any node passed in is null or the collection is null, the method simply returns a new empty array, leaving the checking and exception throwing to you (the person writing a constructor). 
+	 * @param nodes A collection of nodes to convert into an array.
+	 * @return An array containing the contents of nodes unless it or it's contents are null in which case a new empty array.
+	 */
+	public static ValueNode<?>[] valueNodesToArray(Collection<ValueNode<?>> nodes) {
+		if(nodes == null) {
+			return new ValueNode<?>[0];
+		}
+		for(ValueNode<?> node : nodes) {
+			if(node == null) {
+				return new ValueNode<?>[0];
+			}
+		}
+		return nodes.toArray(new ValueNode<?>[nodes.size()]);
+	}
+	
+	/**
+	 * This is a static utility method for constructing the array of value nodes that is passed to the Node class on initialization of a subclass. If any node passed in is null or the collection is null, the method simply returns a new empty array, leaving the checking and exception throwing to you (the person writing a constructor). 
+	 * @param nodes A map of containing {@link ValueNode}s as it's values to be converted to an array. THE KEYS ARE NOT CONVERTED!
+	 * @return An array containing the contents of nodes unless it or it's contents are null in which case a new empty array.
+	 */
+	public static ValueNode<?>[] valueNodesMapToArray(Map<?, ValueNode<?>> nodes) {
+		if(nodes == null) {
+			return new ValueNode<?>[0];
+		}
+		return valueNodesToArray(nodes.values());
 	}
 }
