@@ -5,6 +5,7 @@ import java.util.Map;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.NodeUtils;
 import org.team5940.pantry.processing_network.ValueNode;
+import org.team5940.pantry.processing_network.data_flow.DataFlowNodesTest.TestEnum;
 
 /**
  * A ValueNode that returns a value based on the state the Enum SourceNode is
@@ -18,7 +19,7 @@ import org.team5940.pantry.processing_network.ValueNode;
  * @param <S>
  *            The type of Enum this MultiplexerValueNode corresponds to.
  */
-public class MultiplexerValueNode<T, S> extends ValueNode<T> {
+public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends ValueNode<T> {
 
 	ValueNode<Enum<? extends S>> stateSource;
 	Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap;
@@ -37,7 +38,7 @@ public class MultiplexerValueNode<T, S> extends ValueNode<T> {
 		}
 		
 		this.stateSource = stateSource;
-		
+
 		this.valueSourcesMap = valueSourcesMap;
 	}
 

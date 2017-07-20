@@ -78,7 +78,7 @@ public class NodeUtils {
 	 * @param nodes A collection of nodes to convert into an array.
 	 * @return An array containing the contents of nodes unless it or it's contents are null in which case a new empty array.
 	 */
-	public static ValueNode<?>[] valueNodesToArray(Collection<ValueNode<?>> nodes) {
+	public static ValueNode<?>[] valueNodesToArray(Collection<? extends ValueNode<?>> nodes) {
 		if(nodes == null) {
 			return new ValueNode<?>[0];
 		}
@@ -95,7 +95,7 @@ public class NodeUtils {
 	 * @param nodes A map of containing {@link ValueNode}s as it's values to be converted to an array. THE KEYS ARE NOT CONVERTED!
 	 * @return An array containing the contents of nodes unless it or it's contents are null in which case a new empty array.
 	 */
-	public static ValueNode<?>[] valueNodesMapToArray(Map<?, ValueNode<?>> nodes) {
+	public static ValueNode<?>[] valueNodesMapToArray(Map<? extends Object, ? extends ValueNode<?>> nodes) {
 		if(nodes == null) {
 			return new ValueNode<?>[0];
 		}
