@@ -96,4 +96,31 @@ public class NetworkTest {
 		network.interrupt();
 		assertEquals(3, sourceNode.getValue().intValue());
 	}
+	
+	@Test
+	public void testRun_UpdateRate() {
+		Network network = new Network(20000);
+		
+		NodeTesterObject nodeTester = new NodeTesterObject(network, true, null);
+		
+		assertEquals(nodeTester.getUpdateCount(), 0);
+		
+		network.start();
+		
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(nodeTester.getUpdateCount(), 1);
+		
+		try {
+			Thread.sleep(20);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(nodeTester.getUpdateCount(), 2);
+	}
 }

@@ -8,19 +8,27 @@ import org.team5940.pantry.processing_network.ValueNode;
 
 public class NodeTesterObject extends Node{
 
-	boolean didRun = false;
+	int updateCount = 0;
+	ValueNode<?> source;
 	
 	public NodeTesterObject(Network network, boolean requireUpdate, ValueNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, requireUpdate, source);
+		this.source = source;
 	}
 
 	@Override
 	protected void doUpdate() {
-		didRun = true;
+		this.updateCount++;
+		if (this.source != null)
+			source.getValue();
 	}
 	
 	public boolean getDidRun() {
-		return this.didRun;
+		return (this.updateCount > 0);
+	}
+	
+	public int getUpdateCount() {
+		return this.updateCount;
 	}
 }

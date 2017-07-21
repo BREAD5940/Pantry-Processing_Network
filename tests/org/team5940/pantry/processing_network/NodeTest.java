@@ -29,6 +29,5 @@ public class NodeTest {
 		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true, null);
 		NodeTesterObject node = new NodeTesterObject(network,true, sourceNode);
 	}
-
 }
 
