@@ -29,8 +29,13 @@ public class ConstantValueNode<T> extends ValueNode<T> {
 	}
 
 	@Override
-	protected T updateValue() {
-		return this.value;
+	public T getValue() {
+		return value;
 	}
 
+	@Override
+	protected T updateValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
