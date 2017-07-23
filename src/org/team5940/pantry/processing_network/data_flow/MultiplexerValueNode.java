@@ -5,7 +5,6 @@ import java.util.Map;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.NodeUtils;
 import org.team5940.pantry.processing_network.ValueNode;
-import org.team5940.pantry.processing_network.data_flow.DataFlowNodesTest.TestEnum;
 
 /**
  * A ValueNode that returns a value based on the state the Enum SourceNode is
