@@ -2,7 +2,7 @@ package org.team5940.pantry.processing_network.data_flow;
 
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
-import org.team5940.pantry.processing_network.data_flow.DataFlowNodesTest.TestEnum;
+import org.team5940.pantry.processing_network.data_flow.MultiplexerValueNodeTest.TestEnum;
 
 public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnum>> {
 	
