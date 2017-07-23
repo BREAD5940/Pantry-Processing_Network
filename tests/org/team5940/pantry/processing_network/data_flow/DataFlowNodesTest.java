@@ -65,7 +65,8 @@ public class DataFlowNodesTest {
 	// MultiplexerValueNode tests. 
 	public enum TestEnum {
 		TEST1,
-		TEST2
+		TEST2,
+		TEST3
 	}
 	
 	@Test
@@ -96,8 +97,12 @@ public class DataFlowNodesTest {
 		assertEquals(null, multi.getValue());
 		
 		Thread.sleep(20);
-		
+				
 		assertEquals(0, (int) multi.getValue());
+		
+		Thread.sleep(20);
+		
+		assertEquals(null, multi.getValue());
 
 		network.interrupt();
 	}

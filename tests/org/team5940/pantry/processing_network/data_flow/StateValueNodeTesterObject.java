@@ -23,7 +23,11 @@ public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnu
 		else if (currentRun == 1) {
 			return TestEnum.TEST2;
 		}
-		else 
+		else if (currentRun == 2) {
 			return null;
+		}
+		else {
+			return TestEnum.TEST3;
+		}
 	}
 }
