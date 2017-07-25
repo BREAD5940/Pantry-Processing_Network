@@ -3,7 +3,6 @@ package org.team5940.pantry.processing_network.data_flow;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 import org.team5940.pantry.processing_network.Network;
