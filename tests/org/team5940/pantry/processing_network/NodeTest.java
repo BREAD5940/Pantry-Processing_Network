@@ -26,7 +26,7 @@ public class NodeTest {
 	
 	@Test
 	public void testNode_HasSources() {
-		SourceNodeTesterObject sourceNode = new SourceNodeTesterObject(network, true, null);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true, null);
 		NodeTesterObject node = new NodeTesterObject(network,true, sourceNode);
 	}
 }
