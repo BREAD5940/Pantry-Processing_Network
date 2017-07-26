@@ -45,14 +45,14 @@ public class NetworkTest {
 	public void testAddNode_SourceNodeNotInSameNetwork_IllegalArgument() {
 		Network nodeNetwork = new Network(3);
 		Network sourceNetwork = new Network(3);
-		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(sourceNetwork, true, null);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(sourceNetwork, true);
 		new NodeTesterObject(nodeNetwork, true, sourceNode);
 	}
 	
 	@Test
 	public void testAddNode_WithSources() {
 		Network network = new Network(3);
-		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true, null);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true);
 		NodeTesterObject node = new NodeTesterObject(network, true, sourceNode);
 		assertTrue(network.nodes.contains(node));
 		assertTrue(network.nodes.contains(sourceNode));
@@ -90,7 +90,7 @@ public class NetworkTest {
 	@Test
 	public void testRun_WithSourceNode() throws InterruptedException {
 		Network network = new Network(3);
-		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true, null);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
