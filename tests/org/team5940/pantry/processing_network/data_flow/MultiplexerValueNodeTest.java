@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.NodeTesterObject;
 import org.team5940.pantry.processing_network.ValueNode;
+import org.team5940.pantry.processing_network.functional.ConstantValueNode;
+import org.team5940.pantry.processing_network.functional.MultiplexerValueNode;
 
 public class MultiplexerValueNodeTest {
 	

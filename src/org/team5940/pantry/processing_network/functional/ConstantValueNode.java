@@ -1,4 +1,4 @@
-package org.team5940.pantry.processing_network.data_flow;
+package org.team5940.pantry.processing_network.functional;
 
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;

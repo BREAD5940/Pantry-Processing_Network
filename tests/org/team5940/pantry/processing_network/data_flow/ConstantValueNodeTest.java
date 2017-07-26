@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.team5940.pantry.processing_network.Network;
+import org.team5940.pantry.processing_network.functional.ConstantValueNode;
 
 public class ConstantValueNodeTest {
 	@Test
