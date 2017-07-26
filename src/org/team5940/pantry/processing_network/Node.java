@@ -42,18 +42,6 @@ public abstract class Node {
 		
 		Set<ValueNode<?>> sources = generateSourcesSet(sourcesArray);
 		
-		argumentCheckForNodeConstructor(network, sources);
-		
-		this.sources = sources;
-		this.network = network;
-		this.requireUpdate = requireUpdate;
-		this.network.addNode(this);
-		
-		
-	}
-
-	private void argumentCheckForNodeConstructor(Network network, Set<ValueNode<?>> sources)
-			throws IllegalArgumentException, IllegalStateException {
 		if(network == null) {
 			//TODO log
 			throw new IllegalArgumentException("Null Network");
@@ -69,6 +57,13 @@ public abstract class Node {
 				throw new IllegalArgumentException("SourceNode is Null");
 			}
 		}
+		
+		this.sources = sources;
+		this.network = network;
+		this.requireUpdate = requireUpdate;
+		this.network.addNode(this);
+		
+		
 	}
 
 	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
