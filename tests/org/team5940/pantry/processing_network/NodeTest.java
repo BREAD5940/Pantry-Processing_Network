@@ -22,4 +22,10 @@ public class NodeTest {
 		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true);
 		new NodeTesterObject(network, true, sourceNode);
 	}
+	
+	@Test
+	public void testNode_NullSources() {
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, true, null);
+		new NodeTesterObject(network, true, sourceNode);
+	}
 }
