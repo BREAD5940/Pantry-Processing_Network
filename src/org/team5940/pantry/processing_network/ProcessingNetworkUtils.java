@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Michael Bentley
  *
  */
-public class NodeUtils {
+public class ProcessingNetworkUtils {
 	
 	/**
 	 * This is a static utility method for constructing the array of value nodes that is passed to the Node class on initialization of a subclass. If any node passed in is null, the method simply returns a new empty array, leaving the checking and exception throwing to you (the person writing a constructor).
