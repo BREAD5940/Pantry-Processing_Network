@@ -80,19 +80,12 @@ public class Network extends Thread {
 		}
 	}
 	
-	void startCycle() {
+	private void startCycle() {
 		this.lastCycleStart = microTime();
 		this.currentCycle++;
 	}
 	
-	void endCycleAndDelay() {
-		long cycleEndTime = microTime();
-		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
-		
-		waitCycleDelayPeriod(extraTime);
-	}
-	
-	void runNodeUpdates() {
+	private void runNodeUpdates() {
 		for (Node node : this.nodes) {
 			if (node.requiresUpdate()) {
 				try {
@@ -103,8 +96,15 @@ public class Network extends Thread {
 			}
 		}
 	}
+	
+	private void endCycleAndDelay() {
+		long cycleEndTime = microTime();
+		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
+		
+		waitCycleDelayPeriod(extraTime);
+	}
 
-	void waitCycleDelayPeriod(long extraTime) {
+	private void waitCycleDelayPeriod(long extraTime) {
 		if (extraTime > 0) {
 			try {
 				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000)); 
@@ -183,7 +183,7 @@ public class Network extends Thread {
 	 * Internal method for getting System.nanoTime() as microseconds.
 	 * @return System.nanoTime()/1000
 	 */
-	long microTime() {
+	private long microTime() {
 		return System.nanoTime()/1000;
 	}
 }
