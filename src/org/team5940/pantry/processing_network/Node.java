@@ -13,6 +13,8 @@ import java.util.Set;
  */
 public abstract class Node {
 
+	// TODO rename network cycle naming.
+
 	/**
 	 * Stores this' {@link Network}.
 	 */
@@ -108,29 +110,21 @@ public abstract class Node {
 	 */
 	public final void update() throws IllegalUpdateThreadException {
 		if (this.network == Thread.currentThread()) {
-			updateYetUpdated();
+			updateIfNotYetUpdated();
 		} else {
 			throw new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString());
 		}
 	}
 
-	void updateYetUpdated() {
-		if (this.network.getLastCycle() != this.lastUpdate) {// They would both
-																// be -1 if the
-																// network
-																// hasn't been
-																// started but
-																// it shouldn't
-																// get there
-																// without it
-																// being started
-																// due to the
-																// previous
-																// line.
+	/**
+	 * Updates the network if it has not been updated already. 
+	 */
+	private void updateIfNotYetUpdated() {
+		if (this.network.getLastCycle() != this.lastUpdate && this.network.getLastCycle() != -1) {
 			this.doUpdate();
-			this.lastUpdate = this.network.getLastCycle();// lastUpdate only
-															// changes after
-															// update completes.
+
+			// lastUpdate only changes after update completes.
+			this.lastUpdate = this.network.getLastCycle();
 		}
 	}
 
