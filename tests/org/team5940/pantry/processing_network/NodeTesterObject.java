@@ -1,7 +1,6 @@
 package org.team5940.pantry.processing_network;
 
-import java.util.Set;
-
+import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.Node;
 import org.team5940.pantry.processing_network.ValueNode;
@@ -11,9 +10,9 @@ public class NodeTesterObject extends Node{
 	int updateCount = 0;
 	ValueNode<?> source;
 	
-	public NodeTesterObject(Network network, boolean requireUpdate, ValueNode<?> source)
+	public NodeTesterObject(Network network, Logger logger, boolean requireUpdate, ValueNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate, source);
+		super(network, logger, requireUpdate, source);
 		this.source = source;
 	}
 

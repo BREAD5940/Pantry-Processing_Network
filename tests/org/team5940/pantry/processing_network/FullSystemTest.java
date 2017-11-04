@@ -2,12 +2,21 @@ package org.team5940.pantry.processing_network;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+import org.team5940.pantry.logging.loggers.Logger;
+import org.team5940.pantry.logging.messages.Message;
 
 public class FullSystemTest {
 
-	Network network = new Network(200000);
+	public static Logger defaultLogger = new Logger() {
+		
+		@Override
+		public void log(Message message) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+
+	Network network = new Network(200000, defaultLogger);
 	TestControllerRightJoystick rightJoyStick = new TestControllerRightJoystick(network, false);
 	TestControllerLeftJoystick leftJoyStick = new TestControllerLeftJoystick(network, false);
 	TestDriveTrain driveTrain = new TestDriveTrain(network, false, leftJoyStick, rightJoyStick);
@@ -43,7 +52,7 @@ class TestDriveTrainMotorLeft extends Node {
 
 	public TestDriveTrainMotorLeft(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate, driveTrain);
+		super(network, FullSystemTest.defaultLogger, requireUpdate, driveTrain);
 		this.driveTrain = driveTrain;
 	}
 
@@ -65,7 +74,7 @@ class TestDriveTrainMotorRight extends Node {
 
 	public TestDriveTrainMotorRight(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, requireUpdate, driveTrain);
+		super(network, FullSystemTest.defaultLogger, requireUpdate, driveTrain);
 
 		this.driveTrain = driveTrain;
 	}
@@ -88,7 +97,7 @@ class TestDriveTrain extends ValueNode<Integer[]> {
 
 	public TestDriveTrain(Network network, boolean requireUpdate, ValueNode<Integer> leftInput,
 			ValueNode<Integer> rightInput) throws IllegalArgumentException, IllegalStateException {
-		super(network, leftInput, rightInput);
+		super(network, FullSystemTest.defaultLogger, leftInput, rightInput);
 
 		this.rightInput = rightInput;
 		this.leftInput = leftInput;
@@ -107,7 +116,7 @@ class TestControllerRightJoystick extends ValueNode<Integer> {
 
 	public TestControllerRightJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network);
+		super(network, FullSystemTest.defaultLogger);
 	}
 
 	@Override
@@ -134,7 +143,7 @@ class TestControllerLeftJoystick extends ValueNode<Integer> {
 
 	public TestControllerLeftJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network);
+		super(network, FullSystemTest.defaultLogger);
 	}
 
 	@Override

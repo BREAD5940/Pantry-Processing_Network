@@ -2,6 +2,7 @@ package org.team5940.pantry.processing_network.functional;
 
 import java.util.Map;
 
+import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ProcessingNetworkUtils;
 import org.team5940.pantry.processing_network.ValueNode;
@@ -53,10 +54,10 @@ public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends V
 	 * @throws IllegalStateException
 	 *             If the network is already running.
 	 */
-	public MultiplexerValueNode(Network network, ValueNode<Enum<? extends S>> stateSource,
+	public MultiplexerValueNode(Network network, Logger logger, ValueNode<Enum<? extends S>> stateSource,
 			Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, ProcessingNetworkUtils.concatValueNodes(stateSource, ProcessingNetworkUtils.valueNodesMapToArray(valueSourcesMap)));
+		super(network, logger, ProcessingNetworkUtils.concatValueNodes(stateSource, ProcessingNetworkUtils.valueNodesMapToArray(valueSourcesMap)));
 
 		if (stateSource == null) {
 			throw new IllegalArgumentException("Null State Source");

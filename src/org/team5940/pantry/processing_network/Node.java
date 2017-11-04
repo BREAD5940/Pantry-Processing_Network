@@ -3,6 +3,8 @@ package org.team5940.pantry.processing_network;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.team5940.pantry.logging.loggers.Logger;
+
 /**
  * A Node is a component of a single Network. Nodes perform some sort of
  * operation 0 or 1 time(s) every network cycle: the first time update() is
@@ -36,6 +38,11 @@ public abstract class Node {
 	long lastUpdate = -1;
 
 	/**
+	 * The logger this uses. Shocking.
+	 */
+	Logger logger;
+
+	/**
 	 * Initialize a new Node.
 	 * 
 	 * @param network
@@ -43,6 +50,8 @@ public abstract class Node {
 	 * @param sources
 	 *            The {@link ValueNode}s used by this, if null assumes no
 	 *            sources.
+	 * @param logger
+	 *            The {@link Logger} for this to use.
 	 * @param requireUpdate
 	 *            Whether to, by default, require updates. The requiresUpdate()
 	 *            method can always be overridden to change behavior.
@@ -52,7 +61,7 @@ public abstract class Node {
 	 * @throws IllegalStateException
 	 *             network has already been started.
 	 */
-	public Node(Network network, boolean requireUpdate, ValueNode<?>... sourcesArray)
+	public Node(Network network, Logger logger, boolean requireUpdate, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
 
 		Set<ValueNode<?>> sources;
@@ -63,19 +72,23 @@ public abstract class Node {
 			sources = generateSourcesSet(sourcesArray);
 		}
 
+		if (logger == null) {
+			throw new IllegalArgumentException("Logger is null");
+		}
+
+		this.logger = logger;
+
 		if (network == null) {
-			// TODO log
-			throw new IllegalArgumentException("Null Network");
+			this.logger.throwError(this, new IllegalArgumentException("Null Network"));
 		}
 
 		if (network.getState() != Thread.State.NEW) {
-			// TODO log
-			throw new IllegalStateException("Network Already Started");
+			this.logger.throwError(this, new IllegalStateException("Network Already Started"));
 		}
 
 		for (ValueNode<?> sourceNode : sources) {
 			if (sourceNode == null) {
-				throw new IllegalArgumentException("SourceNode is Null");
+				this.logger.throwError(this, new IllegalArgumentException("SourceNode is Null"));
 			}
 		}
 
@@ -86,6 +99,14 @@ public abstract class Node {
 
 	}
 
+	/**
+	 * Creates a set of sources from varargs. This is used to make setting
+	 * sources easier when using super constructor of node.
+	 * 
+	 * @param sourcesArray
+	 *            The array of different sources the node is using.
+	 * @return A set of sources identical to the inputed array.
+	 */
 	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
 		Set<ValueNode<?>> sources = new HashSet<ValueNode<?>>();
 		for (ValueNode<?> source : sourcesArray) {
@@ -117,7 +138,7 @@ public abstract class Node {
 	}
 
 	/**
-	 * Updates the network if it has not been updated already. 
+	 * Updates the network if it has not been updated already.
 	 */
 	private void updateIfNotYetUpdated() {
 		if (this.network.getLastCycle() != this.lastUpdate && this.network.getLastCycle() != -1) {
@@ -173,8 +194,12 @@ public abstract class Node {
 	 * return -1.
 	 * 
 	 * @return The last cycle this node updated.
+	 * @throws IllegalStateException
+	 *             If this node's network has not started.
 	 */
-	public long getLastUpdateCycle() {
+	public long getLastUpdateCycle() throws IllegalStateException {
+		if (!this.getNetwork().isAlive())
+			throw new IllegalStateException("Network has not started");
 		return this.lastUpdate;
 	}
 

@@ -1,6 +1,12 @@
 package org.team5940.pantry.processing_network;
 
 import java.util.Set;
+
+import com.google.gson.JsonArray;
+import org.team5940.pantry.logging.LabeledObject;
+import org.team5940.pantry.logging.loggers.Logger;
+import org.team5940.pantry.logging.messages.events.ErrorEventMessage;
+
 import java.util.HashSet;
 
 /**
@@ -38,7 +44,7 @@ import java.util.HashSet;
  * @author Michael Bentley, David Boles
  * 
  */
-public class Network extends Thread {
+public class Network extends Thread implements LabeledObject {
 
 	/**
 	 * The lowest number of microseconds between the start of cycles for this
@@ -54,7 +60,7 @@ public class Network extends Thread {
 	/**
 	 * The current cycle this Network is on.
 	 */
-	long currentCycle = -1;
+	long currentCycle = 0;
 
 	/**
 	 * The value of System.nanoTime()/1000 when this is first started.
@@ -68,18 +74,26 @@ public class Network extends Thread {
 	long lastCycleStart;
 
 	/**
+	 * The logger that is used to log messages.
+	 */
+	Logger logger;
+
+	/**
 	 * Creates a new Network with the given cycle delay.
 	 * 
 	 * @param cycleDelay
 	 *            The minimum number of microseconds between the beginning of
 	 *            cycles. Must be greater than or equal to 0.
-	 * @throws IllegalArgumentException
-	 *             cycleDelay is less than 0.
 	 */
-	public Network(long cycleDelay) throws IllegalArgumentException {
+	public Network(long cycleDelay, Logger logger) {
+		if (logger == null) {
+			throw new IllegalArgumentException("Logger is null");
+		}
+		this.logger = logger;
 		if (cycleDelay < 0) {
-			// TODO log
-			throw new IllegalArgumentException("Illegal Value For cycleDelay");
+			// TODO log.
+			// TODO make it easier to log errors.
+			this.logger.throwError(this, new IllegalArgumentException("Illegal Value For cycleDelay"));
 		}
 		this.cycleDelay = cycleDelay;
 		this.nodes = new HashSet<>();
@@ -95,11 +109,13 @@ public class Network extends Thread {
 		}
 	}
 
+	// TODO javadoc
 	private void startCycle() {
 		this.lastCycleStart = microTime();
 		this.currentCycle++;
 	}
 
+	// TODO javadoc
 	private void runNodeUpdates() {
 		for (Node node : this.nodes) {
 			if (node.requiresUpdate()) {
@@ -112,6 +128,7 @@ public class Network extends Thread {
 		}
 	}
 
+	// TODO javadoc 
 	private void endCycleAndDelay() {
 		long cycleEndTime = microTime();
 		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
@@ -119,6 +136,7 @@ public class Network extends Thread {
 		waitCycleDelayPeriod(extraTime);
 	}
 
+	// TODO javadoc
 	private void waitCycleDelayPeriod(long extraTime) {
 		if (extraTime > 0) {
 			try {
@@ -179,14 +197,22 @@ public class Network extends Thread {
 	 * Gets the last cycle this network started (potentially a currently
 	 * executing cycle).
 	 * 
-	 * @return The current cycle this Network is on. If Network is not running
-	 *         returns -1.
+	 * @return The current cycle this Network is on.
 	 */
-	public long getLastCycle() {
+	/**
+	 * Gets the last cycle this network started (potentially a currently
+	 * executing cycle).
+	 * 
+	 * @return The current cycle this Network is on.
+	 * @throws IllegalStateException
+	 *             if the network has not been started.
+	 */
+	public long getLastCycle() throws IllegalStateException {
 		if (this.isAlive()) {
 			return currentCycle;
 		} else {
-			return -1;
+			// TODO log
+			throw new IllegalStateException("Network not started");
 		}
 	}
 
@@ -194,14 +220,16 @@ public class Network extends Thread {
 	 * Gets the time in microseconds from when the network started to the start
 	 * of the last cycle (potentially a currently executing cycle).
 	 * 
-	 * @return Microseconds since network start to last cycle start. Returns -1
-	 *         if the network is not running.
+	 * @return Microseconds since network start to last cycle start.
+	 * @throws IllegalStateException
+	 *             if the network has not been started.
 	 */
-	public long getLastCycleStart() {
+	public long getLastCycleStart() throws IllegalStateException {
 		if (this.isAlive()) {
 			return this.lastCycleStart - this.startTime;
 		} else {
-			return -1;
+			// TODO log
+			throw new IllegalStateException("Network not started");
 		}
 	}
 
@@ -212,5 +240,12 @@ public class Network extends Thread {
 	 */
 	private long microTime() {
 		return System.nanoTime() / 1000;
+	}
+
+	@Override
+	public JsonArray getLabel() {
+		JsonArray label = new JsonArray();
+		label.add("network");
+		return label;
 	}
 }

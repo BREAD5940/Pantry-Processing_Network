@@ -1,5 +1,6 @@
 package org.team5940.pantry.processing_network.data_flow;
 
+import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
 import org.team5940.pantry.processing_network.data_flow.MultiplexerValueNodeTest.TestEnum;
@@ -8,9 +9,9 @@ public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnu
 	
 	int currentRun = -1;
 
-	public StateValueNodeTesterObject(Network network)
+	public StateValueNodeTesterObject(Network network, Logger logger)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network);
+		super(network, logger);
 		// TODO Auto-generated constructor stub
 	}
 	

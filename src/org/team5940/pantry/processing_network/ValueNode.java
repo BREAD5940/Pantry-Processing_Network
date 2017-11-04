@@ -1,5 +1,7 @@
 package org.team5940.pantry.processing_network;
 
+import org.team5940.pantry.logging.loggers.Logger;
+
 /**
  * A Node that stores data of type T. Data is updated once every Network cycle
  * at most. Data returned is a cached value of the data.
@@ -16,10 +18,9 @@ public abstract class ValueNode<T extends Object> extends Node {
 	T value;
 	
 	
-	public ValueNode(Network network, ValueNode<?>... sourcesArray)
+	public ValueNode(Network network, Logger logger, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, false, sourcesArray);
-		// TODO Auto-generated constructor stub
+		super(network, logger, false, sourcesArray);
 	}
 
 	/**
