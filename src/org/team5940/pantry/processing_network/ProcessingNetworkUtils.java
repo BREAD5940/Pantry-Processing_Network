@@ -146,6 +146,7 @@ public class ProcessingNetworkUtils {
 	 */
 	public static void checkArgument(Object argument) throws IllegalArgumentException {
 		if (argument == null) {
+			// TODO maybe log?
 			throw new IllegalArgumentException("Null Argument");
 		}
 	}
