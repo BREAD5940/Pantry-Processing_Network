@@ -27,7 +27,7 @@ public class NodeGroupTest {
 
 		ValueNode<?> randomNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
 
-		NodeGroupTesterObject testGroup = new NodeGroupTesterObject(network, valueNode, randomNode, node);
+		NodeGroupTesterObject testGroup = new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, randomNode, node);
 
 		Set<Node> outputNodeTest = new HashSet<>();
 		outputNodeTest.add(node);
@@ -51,7 +51,7 @@ public class NodeGroupTest {
 		
 		ValueNode<?> valueNode = new ValueNodeTesterObject(wrongNetwork, FullSystemTest.defaultLogger, true);
 		
-		new NodeGroupTesterObject(network, valueNode);
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -60,7 +60,7 @@ public class NodeGroupTest {
 				
 		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
 		
-		new NodeGroupTesterObject(network, valueNode, null);
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, null);
 	}
 	
 	@Test (expected = IllegalStateException.class)
@@ -71,6 +71,6 @@ public class NodeGroupTest {
 		
 		network.start();
 		
-		new NodeGroupTesterObject(network, valueNode, null);
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, null);
 	}
 }

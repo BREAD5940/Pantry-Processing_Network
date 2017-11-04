@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.team5940.pantry.logging.LabeledObject;
 import org.team5940.pantry.logging.LoggingUtils;
+import org.team5940.pantry.logging.loggers.Logger;
 
 import com.google.gson.JsonArray;
 
@@ -27,6 +28,11 @@ public abstract class NodeGroup implements LabeledObject {
 	 * The Network that all the Nodes in this NodeGroup belong to.
 	 */
 	final Network network;
+	
+	/**
+	 * This' logger. 
+	 */
+	Logger logger;
 
 	/**
 	 * Creates a new NodeGroup. A NodeGroup is used to allow easy creation for a
@@ -36,9 +42,12 @@ public abstract class NodeGroup implements LabeledObject {
 	 * @param network
 	 *            The Network that all of the Nodes belong to.
 	 */
-	public NodeGroup(Network network) {
+	public NodeGroup(Network network, Logger logger) {
 		this.network = network;
 		this.nodes = new HashSet<>();
+		if (logger == null) 
+			throw new IllegalArgumentException("Logger is null");
+		this.logger = logger;
 	}
 
 	/**
@@ -53,13 +62,13 @@ public abstract class NodeGroup implements LabeledObject {
 	 */
 	protected void addNode(Node node) {
 		if (network.getState() != Thread.State.NEW) {
-			throw new IllegalStateException("Network not new");
+			this.logger.throwError(this, new IllegalStateException("Network not new"));
 		}
 		if (node == null) {
-			throw new IllegalArgumentException("Null node");
+			this.logger.throwError(this, new IllegalArgumentException("Null node"));
 		}
 		if (node.getNetwork() != this.network) {
-			throw new IllegalArgumentException("Incorrect Network");
+			this.logger.throwError(this, new IllegalArgumentException("Incorrect Network"));
 		}
 		this.nodes.add(node);
 	}
