@@ -44,7 +44,7 @@ public abstract class Node implements LabeledObject {
 	/**
 	 * The logger this uses. Shocking.
 	 */
-	Logger logger;
+	protected Logger logger;
 
 	/**
 	 * Initialize a new Node.
@@ -137,7 +137,8 @@ public abstract class Node implements LabeledObject {
 		if (this.network == Thread.currentThread()) {
 			updateIfNotYetUpdated();
 		} else {
-			throw new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString());
+			this.logger.throwError(this,
+					new IllegalUpdateThreadException("Not MY Network: " + Thread.currentThread().toString()));
 		}
 	}
 
@@ -203,13 +204,13 @@ public abstract class Node implements LabeledObject {
 	 */
 	public long getLastUpdateCycle() throws IllegalStateException {
 		if (!this.getNetwork().isAlive())
-			throw new IllegalStateException("Network has not started");
+			this.logger.throwError(this, new IllegalStateException("Network has not started"));
 		return this.lastUpdate;
 	}
-	
+
 	@Override
 	public JsonArray getLabel() {
-		// TODO Find way to force children to override this method. 
+		// TODO Find way to force children to override this method.
 		return LoggingUtils.chainPut(new JsonArray(), "Node");
 	}
 

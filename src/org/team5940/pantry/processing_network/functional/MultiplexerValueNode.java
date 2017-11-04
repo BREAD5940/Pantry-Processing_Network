@@ -60,11 +60,11 @@ public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends V
 		super(network, logger, ProcessingNetworkUtils.concatValueNodes(stateSource, ProcessingNetworkUtils.valueNodesMapToArray(valueSourcesMap)));
 
 		if (stateSource == null) {
-			throw new IllegalArgumentException("Null State Source");
+			this.logger.throwError(this, new IllegalArgumentException("Null State Source"));
 		}
 
 		if (valueSourcesMap == null) {
-			throw new IllegalArgumentException("Null Value Sources Map");
+			this.logger.throwError(this, new IllegalArgumentException("Null Value Sources Map"));
 		}
 
 		this.stateSource = stateSource;
