@@ -1,6 +1,7 @@
 package org.team5940.pantry.processing_network;
 
 import org.team5940.pantry.logging.loggers.Logger;
+import org.team5940.pantry.logging.messages.values.ValueMessage;
 
 /**
  * A Node that stores data of type T. Data is updated once every Network cycle
@@ -37,7 +38,8 @@ public abstract class ValueNode<T extends Object> extends Node {
 	@Override
 	protected void doUpdate() {
 		this.value = this.updateValue();
-		// TODO log
+		// TODO I am pretty sure we won't be able to distinguish between logs. Will be an issue. 
+		this.logger.log(new ValueMessage(this, this.value));
 	}
 
 	/**

@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import org.team5940.pantry.logging.LabeledObject;
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.logging.messages.events.ErrorEventMessage;
+import org.team5940.pantry.logging.messages.values.NumberValueMessage;
 
 import java.util.HashSet;
 
@@ -91,7 +92,6 @@ public class Network extends Thread implements LabeledObject {
 		}
 		this.logger = logger;
 		if (cycleDelay < 0) {
-			// TODO log.
 			// TODO make it easier to log errors.
 			this.logger.throwError(this, new IllegalArgumentException("Illegal Value For cycleDelay"));
 		}
@@ -128,7 +128,7 @@ public class Network extends Thread implements LabeledObject {
 		}
 	}
 
-	// TODO javadoc 
+	// TODO javadoc
 	private void endCycleAndDelay() {
 		long cycleEndTime = microTime();
 		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
@@ -142,8 +142,10 @@ public class Network extends Thread implements LabeledObject {
 			try {
 				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000));
 			} catch (InterruptedException e) {
-				// TODO log
+				this.logger.log(new ErrorEventMessage(this, e));
 			}
+		} else {
+			this.logger.log(new NumberValueMessage(this, extraTime, NumberValueMessage.MICROSECONDS_UNIT));
 		}
 	}
 
@@ -165,21 +167,17 @@ public class Network extends Thread implements LabeledObject {
 
 	private void argumentChecksForAddNode(Node node) throws IllegalStateException, IllegalArgumentException {
 		if (this.getState() != Thread.State.NEW) {
-			// TODO log
-			throw new IllegalStateException("Network Already Started");
+			this.logger.throwError(this, new IllegalStateException("Network Already Started"));
 		}
 		if (node == null) {
-			// TODO log
-			throw new IllegalArgumentException("Null Node");
+			this.logger.throwError(this, new IllegalArgumentException("Null Node"));
 		}
 		if (node.getNetwork() != this) {
-			// TODO log
-			throw new IllegalArgumentException("Wrong Node Network");
+			this.logger.throwError(this, new IllegalArgumentException("Wrong Node Network"));
 		}
 		for (Node source : node.enumerateSources()) {
-			// TODO log
 			if (!this.nodes.contains(source)) {
-				throw new IllegalArgumentException("Node Source Not In Network");
+				this.logger.throwError(this, new IllegalArgumentException("Node Source Not In Network"));
 			}
 		}
 	}
@@ -207,12 +205,13 @@ public class Network extends Thread implements LabeledObject {
 	 * @throws IllegalStateException
 	 *             if the network has not been started.
 	 */
-	public long getLastCycle() throws IllegalStateException {
+	public long getLastCycle() {
 		if (this.isAlive()) {
 			return currentCycle;
 		} else {
-			// TODO log
-			throw new IllegalStateException("Network not started");
+			this.logger.throwError(this, new IllegalStateException("Network not started"));
+			// TODO should not have to write this return line.
+			return 0;
 		}
 	}
 
@@ -224,12 +223,13 @@ public class Network extends Thread implements LabeledObject {
 	 * @throws IllegalStateException
 	 *             if the network has not been started.
 	 */
-	public long getLastCycleStart() throws IllegalStateException {
+	public long getLastCycleStart() {
 		if (this.isAlive()) {
 			return this.lastCycleStart - this.startTime;
 		} else {
-			// TODO log
-			throw new IllegalStateException("Network not started");
+			this.logger.throwError(this, new IllegalStateException("Network not started"));
+			// TODO should not have to write this return line.
+			return 0;
 		}
 	}
 
