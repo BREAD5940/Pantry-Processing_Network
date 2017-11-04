@@ -3,7 +3,11 @@ package org.team5940.pantry.processing_network;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.team5940.pantry.logging.LabeledObject;
+import org.team5940.pantry.logging.LoggingUtils;
 import org.team5940.pantry.logging.loggers.Logger;
+
+import com.google.gson.JsonArray;
 
 /**
  * A Node is a component of a single Network. Nodes perform some sort of
@@ -13,7 +17,7 @@ import org.team5940.pantry.logging.loggers.Logger;
  * @author Michael Bentley, David Boles
  * 
  */
-public abstract class Node {
+public abstract class Node implements LabeledObject {
 
 	// TODO rename network cycle naming.
 
@@ -201,6 +205,12 @@ public abstract class Node {
 		if (!this.getNetwork().isAlive())
 			throw new IllegalStateException("Network has not started");
 		return this.lastUpdate;
+	}
+	
+	@Override
+	public JsonArray getLabel() {
+		// TODO Find way to force children to override this method. 
+		return LoggingUtils.chainPut(new JsonArray(), "Node");
 	}
 
 }

@@ -3,6 +3,11 @@ package org.team5940.pantry.processing_network;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.team5940.pantry.logging.LabeledObject;
+import org.team5940.pantry.logging.LoggingUtils;
+
+import com.google.gson.JsonArray;
+
 /**
  * 
  * A NodeGroup is used to allow easy creation for a set of Nodes, such as a
@@ -11,7 +16,7 @@ import java.util.Set;
  * 
  * @author Michael Bentley
  */
-public abstract class NodeGroup {
+public abstract class NodeGroup implements LabeledObject {
 
 	/**
 	 * The nodes in this NodeGroup.
@@ -110,6 +115,11 @@ public abstract class NodeGroup {
 		}
 
 		return outputs;
+	}
+	
+	@Override
+	public JsonArray getLabel() {
+		return LoggingUtils.chainPut(new JsonArray(), "Node Group");
 	}
 
 	// TODO add get name inherited from LabledObject in logging.
