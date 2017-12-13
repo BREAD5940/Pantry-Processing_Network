@@ -7,12 +7,12 @@ import org.team5940.pantry.logging.messages.Message;
 
 public class FullSystemTest {
 
+	// TODO make this an actual logger type.
 	public static Logger defaultLogger = new Logger() {
-		
+
 		@Override
 		public void log(Message message) {
-			// TODO Auto-generated method stub
-			
+
 		}
 	};
 
@@ -35,12 +35,12 @@ public class FullSystemTest {
 
 		assertEquals(null, rightMotor.getSpeed());
 		assertEquals(1, leftMotor.getSpeed());
-		
+
 		Thread.sleep(200);
 
 		assertEquals(Integer.valueOf(3), rightMotor.getSpeed());
 		assertEquals(1, leftMotor.getSpeed());
-		
+
 		network.interrupt();
 	}
 }
@@ -61,7 +61,7 @@ class TestDriveTrainMotorLeft extends Node {
 		Integer[] driveTrainArray = driveTrain.getValue();
 		speed = driveTrainArray[0];
 	}
-	
+
 	public int getSpeed() {
 		return speed;
 	}
@@ -84,7 +84,7 @@ class TestDriveTrainMotorRight extends Node {
 		Integer[] driveTrainArray = driveTrain.getValue();
 		speed = driveTrainArray[1];
 	}
-	
+
 	public Integer getSpeed() {
 		return speed;
 	}
@@ -123,7 +123,7 @@ class TestControllerRightJoystick extends ValueNode<Integer> {
 	public Integer updateValue() {
 		value = getRightJoyStickInput(call);
 		call++;
-		
+
 		return value;
 	}
 
