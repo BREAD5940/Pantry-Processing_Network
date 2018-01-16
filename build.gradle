@@ -14,7 +14,7 @@ plugins {
     id "idea"
 }
 
-group = 'org.team5940.pantry'
+group = 'org.team5940'
 version = '0.0.0'
 
 // In this section you declare where to find the dependencies of your project
