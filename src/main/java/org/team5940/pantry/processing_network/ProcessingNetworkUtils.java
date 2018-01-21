@@ -134,38 +134,4 @@ public class ProcessingNetworkUtils {
 		}
 		return valueNodesToArray(nodes.values());
 	}
-
-	/**
-	 * Checks an argument to see if it is null. Should only be used for checking
-	 * constructor arguments for nodes.
-	 * 
-	 * @param argument
-	 *            The argument to check if null.
-	 * @throws IllegalArgumentException
-	 *             If the argument is null.
-	 */
-	public static void checkArgument(Object argument) throws IllegalArgumentException {
-		if (argument == null) {
-			// TODO maybe log?
-			throw new IllegalArgumentException("Null Argument");
-		}
-	}
-
-	/**
-	 * Checks array to see if it is null, and then checks each of its individual
-	 * values to see if it is null. Should only be used in constructor.
-	 * 
-	 * @param arguments
-	 *            Array to check if it or any of its values are null.
-	 * @throws IllegalArgumentException
-	 *             Throws if any value is null.
-	 */
-	public static void checkArrayArguments(Object[] arguments) throws IllegalArgumentException {
-		checkArgument(arguments);
-		for (Object argument : arguments) {
-			if (argument == null) {
-				throw new IllegalArgumentException("Array Argument Null");
-			}
-		}
-	}
 }
