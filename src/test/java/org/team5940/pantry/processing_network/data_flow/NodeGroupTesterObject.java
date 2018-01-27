@@ -10,8 +10,8 @@ import com.google.gson.JsonArray;
 
 public class NodeGroupTesterObject extends NodeGroup {
 		
-	public NodeGroupTesterObject(Network network, Logger logger, Node... nodes) {
-		super(network, logger);
+	public NodeGroupTesterObject(Network network, Logger logger, String label, Node... nodes) {
+		super(network, logger, label);
 		
 		for (Node node : nodes) {
 			this.addNode(node);

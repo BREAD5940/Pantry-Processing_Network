@@ -32,33 +32,39 @@ public class DeadzoneValueNode extends ValueNode<Double> {
 	 *            This' Network
 	 * @param logger
 	 *            This' Logger
+	 * @param label
+	 *            This' label.
 	 * @param numberValueNode
 	 *            The value to adjust with a deadzone.
 	 * @param deadzone
 	 *            The size of the deadzone.
 	 */
-	public DeadzoneValueNode(Network network, Logger logger, ValueNode<? extends Number> numberValueNode,
+	public DeadzoneValueNode(Network network, Logger logger, String label, ValueNode<? extends Number> numberValueNode,
 			ValueNode<? extends Number> deadzone) throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, numberValueNode, deadzone);
+		super(network, logger, label, numberValueNode, deadzone);
 		this.numberValueNode = numberValueNode;
 		this.deadzone = deadzone;
 	}
 
 	/**
-	 * Creates a deadzone for a ValueNode of a constant size.
+	 * Creates a deadzone for a ValueNode of a constant size. This will create a
+	 * ConstantValueNode with the label "Deadzone Constant Value: " + label.
 	 * 
 	 * @param network
 	 *            This' Network
 	 * @param logger
 	 *            This' Logger
+	 * @param label
+	 *            This' label.
 	 * @param numberValueNode
 	 *            The value to adjust with a deadzone
 	 * @param deadzone
 	 *            The size of the deadzone.
 	 */
-	public DeadzoneValueNode(Network network, Logger logger, ValueNode<? extends Number> numberValueNode,
+	public DeadzoneValueNode(Network network, Logger logger, String label, ValueNode<? extends Number> numberValueNode,
 			double deadzone) throws IllegalArgumentException, IllegalStateException {
-		this(network, logger, numberValueNode, new ConstantValueNode<Double>(network, logger, deadzone));
+		this(network, logger, label, numberValueNode,
+				new ConstantValueNode<Double>(network, logger, "Deadzone Constant Value: " + label, deadzone));
 	}
 
 	@Override

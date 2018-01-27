@@ -8,9 +8,9 @@ public class ValueNodeTesterObject extends ValueNode<Integer> {
 	
 	boolean requiresUpdate;
 
-	public ValueNodeTesterObject(Network network, Logger logger, boolean requireUpdate, ValueNode<?>... sources)
+	public ValueNodeTesterObject(Network network, Logger logger, String label, boolean requireUpdate, ValueNode<?>... sources)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, sources);
+		super(network, logger, label, sources);
 		this.requiresUpdate = requireUpdate;
 	}
 

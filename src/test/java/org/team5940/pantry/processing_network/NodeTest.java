@@ -9,23 +9,23 @@ public class NodeTest {
 
 	@Test
 	public void testNode_NoUpdateAlsoNoSources() {
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, false, null);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, false, null);
 	}
 
 	@Test
 	public void testNode_DoesUpdateAlsoNoSources() {
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, true, null);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, null);
 	}
 
 	@Test
 	public void testNode_HasSources() {
-		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, true, sourceNode);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, sourceNode);
 	}
 	
 	@Test
 	public void testNode_NullSources() {
-		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true, null);
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, true, sourceNode);
+		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, null);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, sourceNode);
 	}
 }

@@ -11,7 +11,7 @@ public class ConstantValueNodeTest {
 	@Test
 	public void testConstantValueNode_IntegerValue() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 5);
+		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, 5);
 		assertEquals(Integer.valueOf(5), constantValue.getValue());
 		network.start();
 		try {
@@ -26,7 +26,7 @@ public class ConstantValueNodeTest {
 	@Test
 	public void testConstantValueNode_StringValue() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		ConstantValueNode<String> constantValue = new ConstantValueNode<String>(network, FullSystemTest.defaultLogger, "Test");
+		ConstantValueNode<String> constantValue = new ConstantValueNode<String>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, "Test");
 		assertEquals("Test", constantValue.getValue());
 		network.start();
 		try {
@@ -41,7 +41,7 @@ public class ConstantValueNodeTest {
 	@Test
 	public void testConstantValueNode_NullValue() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, null);
+		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, null);
 		assertEquals(null, constantValue.getValue());
 		network.start();
 		try {

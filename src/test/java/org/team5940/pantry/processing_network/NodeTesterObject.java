@@ -10,9 +10,9 @@ public class NodeTesterObject extends Node{
 	int updateCount = 0;
 	ValueNode<?> source;
 	
-	public NodeTesterObject(Network network, Logger logger, boolean requireUpdate, ValueNode<?> source)
+	public NodeTesterObject(Network network, Logger logger, String label, boolean requireUpdate, ValueNode<?> source)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, requireUpdate, source);
+		super(network, logger, label, requireUpdate, source);
 		this.source = source;
 	}
 

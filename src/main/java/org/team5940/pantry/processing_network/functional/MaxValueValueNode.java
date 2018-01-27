@@ -34,9 +34,9 @@ public class MaxValueValueNode extends ValueNode<Double> {
 	 * @param valueNode
 	 *            The ValueNode to store the maxValue of.
 	 */
-	public MaxValueValueNode(Network network, Logger logger, ValueNode<? extends Number> valueNode)
+	public MaxValueValueNode(Network network, Logger logger, String label, ValueNode<? extends Number> valueNode)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, valueNode);
+		super(network, logger, label, valueNode);
 
 		this.valueNode = valueNode;
 	}
