@@ -1,5 +1,6 @@
 package org.team5940.pantry.processing_network;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,19 +77,21 @@ public abstract class Node implements LabeledObject {
 	public Node(Network network, Logger logger, JsonArray label, boolean requireUpdate, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
 
-		Set<ValueNode<?>> sources;
-
-		if (sourcesArray == null) {
-			sources = new HashSet<>();
-		} else {
-			sources = generateSourcesSet(sourcesArray);
-		}
+		System.out.println("Sources Array: " + Arrays.toString(sourcesArray));
 
 		if (logger == null) {
 			throw new IllegalArgumentException("Logger is null");
 		}
 
 		this.logger = logger;
+
+		Set<ValueNode<?>> sources = null;
+
+		if (sourcesArray == null) {
+			this.logger.throwError(this, new IllegalArgumentException("Sources Array Null"));
+		} else {
+			sources = generateSourcesSet(sourcesArray);
+		}
 
 		if (network == null) {
 			this.logger.throwError(this, new IllegalArgumentException("Null Network"));
@@ -149,9 +152,7 @@ public abstract class Node implements LabeledObject {
 	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
 		Set<ValueNode<?>> sources = new HashSet<ValueNode<?>>();
 		for (ValueNode<?> source : sourcesArray) {
-			if (source != null) {
-				sources.add(source);
-			}
+			sources.add(source);
 		}
 		return sources;
 	}

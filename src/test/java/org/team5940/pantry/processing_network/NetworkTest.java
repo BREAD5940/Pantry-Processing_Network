@@ -27,7 +27,7 @@ public class NetworkTest {
 	public void testAddNode_WithoutSources() {
 		Network network = new Network(3, FullSystemTest.defaultLogger);
 		NodeTesterObject node = new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,
-				true, null);
+				true);
 		assertTrue(network.nodes.contains(node));
 	}
 
@@ -68,7 +68,7 @@ public class NetworkTest {
 	public void testRun_WithNode() throws InterruptedException {
 		Network network = new Network(3, FullSystemTest.defaultLogger);
 		NodeTesterObject node = new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,
-				true, null);
+				true);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
@@ -79,9 +79,9 @@ public class NetworkTest {
 	public void testRun_WithMultipleNodes() throws InterruptedException {
 		Network network = new Network(3, FullSystemTest.defaultLogger);
 		NodeTesterObject node = new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,
-				true, null);
+				true);
 		NodeTesterObject node2 = new NodeTesterObject(network, FullSystemTest.defaultLogger,
-				FullSystemTest.defaultLabel, true, null);
+				FullSystemTest.defaultLabel, true);
 		network.start();
 		Thread.sleep(100);
 		network.interrupt();
@@ -105,7 +105,7 @@ public class NetworkTest {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
 
 		NodeTesterObject nodeTester = new NodeTesterObject(network, FullSystemTest.defaultLogger,
-				FullSystemTest.defaultLabel, true, null);
+				FullSystemTest.defaultLabel, true);
 
 		assertEquals(nodeTester.getUpdateCount(), 0);
 

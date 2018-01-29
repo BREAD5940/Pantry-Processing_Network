@@ -38,7 +38,7 @@ public class ConstantValueNodeTest {
 		network.interrupt();
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstantValueNode_NullValue() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
 		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, null);

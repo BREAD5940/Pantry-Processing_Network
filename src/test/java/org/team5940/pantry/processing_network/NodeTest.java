@@ -9,12 +9,12 @@ public class NodeTest {
 
 	@Test
 	public void testNode_NoUpdateAlsoNoSources() {
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, false, null);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, false);
 	}
 
 	@Test
 	public void testNode_DoesUpdateAlsoNoSources() {
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, null);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true);
 	}
 
 	@Test
@@ -23,7 +23,7 @@ public class NodeTest {
 		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, sourceNode);
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testNode_NullSources() {
 		ValueNodeTesterObject sourceNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, null);
 		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, sourceNode);

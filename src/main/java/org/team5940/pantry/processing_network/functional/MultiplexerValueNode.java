@@ -109,6 +109,8 @@ public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends V
 			Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap, T defaultValue) {
 		this(network, logger, label, stateSource, valueSourcesMap,
 				new ConstantValueNode<>(network, logger, "Multiplexer Constant Default Value: " + label, defaultValue));
+		
+		LoggingUtils.checkArgument(valueSourcesMap);
 	}
 
 	@Override
