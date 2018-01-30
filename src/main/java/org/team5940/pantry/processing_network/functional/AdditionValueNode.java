@@ -5,7 +5,7 @@ import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
 
 /**
- * Subtracts the second number from the first. 
+ * Adds the two numbers. 
  * 
  * 
  * @author Paul Dowd
