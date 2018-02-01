@@ -28,34 +28,47 @@ public abstract class NodeGroup implements LabeledObject {
 	 * The Network that all the Nodes in this NodeGroup belong to.
 	 */
 	final Network network;
-	
-	/**
-	 * This' logger. 
-	 */
-	Logger logger;
 
 	/**
-	 * Creates a new NodeGroup. A NodeGroup is used to allow easy creation for a
-	 * set of Nodes, such as a Group of Motors. This will also help with being
-	 * able to log information.
+	 * This' logger.
+	 */
+	Logger logger;
+	
+	/**
+	 * This' Label. 
+	 */
+	JsonArray label;
+
+	/**
+	 * Creates a new NodeGroup. A NodeGroup is used to allow easy creation for a set
+	 * of Nodes, such as a Group of Motors. This will also help with being able to
+	 * log information.
 	 * 
 	 * @param network
 	 *            The Network that all of the Nodes belong to.
+	 * @param logger
+	 *            This' logger.
+	 * @param label
+	 *            This' label.
 	 */
-	public NodeGroup(Network network, Logger logger) {
+	public NodeGroup(Network network, Logger logger, String label) {
 		this.network = network;
 		this.nodes = new HashSet<>();
-		if (logger == null) 
+		if (logger == null)
 			throw new IllegalArgumentException("Logger is null");
 		this.logger = logger;
+		LoggingUtils.checkArgument(label);
+		this.label = new JsonArray();
+		this.label.add(label);
+		this.label.add("Node Group");
 	}
 
 	/**
 	 * Adds a node to this NodeGroup.
 	 * 
-	 * Will throw an IllegalStateException if the Network has already been
-	 * started. Will also throw and IllegalArgumentException if the node is null
-	 * or it does not belong to the correct Network.
+	 * Will throw an IllegalStateException if the Network has already been started.
+	 * Will also throw and IllegalArgumentException if the node is null or it does
+	 * not belong to the correct Network.
 	 * 
 	 * @param node
 	 *            The Node to add to this NodeGroup.
@@ -101,10 +114,10 @@ public abstract class NodeGroup implements LabeledObject {
 	}
 
 	/**
-	 * This gets the Nodes that are on the edge of this NodeGroup. This means
-	 * any Node that is not used as a source by another Node in this Network.
-	 * This will include all Nodes that do not implement ValueNode as they
-	 * cannot be used as sources.
+	 * This gets the Nodes that are on the edge of this NodeGroup. This means any
+	 * Node that is not used as a source by another Node in this Network. This will
+	 * include all Nodes that do not implement ValueNode as they cannot be used as
+	 * sources.
 	 * 
 	 * @return The Nodes not used as sources by Nodes in this Node group.
 	 */
@@ -125,11 +138,9 @@ public abstract class NodeGroup implements LabeledObject {
 
 		return outputs;
 	}
-	
+
 	@Override
 	public JsonArray getLabel() {
-		return LoggingUtils.chainPut(new JsonArray(), "Node Group");
+		return label;
 	}
-
-	// TODO add get name inherited from LabledObject in logging.
 }

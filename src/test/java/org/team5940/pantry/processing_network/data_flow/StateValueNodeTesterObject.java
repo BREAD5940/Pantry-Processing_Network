@@ -6,28 +6,24 @@ import org.team5940.pantry.processing_network.ValueNode;
 import org.team5940.pantry.processing_network.data_flow.MultiplexerValueNodeTest.TestEnum;
 
 public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnum>> {
-	
+
 	int currentRun = -1;
 
-	public StateValueNodeTesterObject(Network network, Logger logger)
+	public StateValueNodeTesterObject(Network network, Logger logger, String label)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger);
-		// TODO Auto-generated constructor stub
+		super(network, logger, label);
 	}
-	
+
 	@Override
 	protected Enum<? extends TestEnum> updateValue() {
 		currentRun++;
 		if (currentRun == 0) {
 			return TestEnum.TEST1;
-		}
-		else if (currentRun == 1) {
+		} else if (currentRun == 1) {
 			return TestEnum.TEST2;
-		}
-		else if (currentRun == 2) {
+		} else if (currentRun == 2) {
 			return null;
-		}
-		else {
+		} else {
 			return TestEnum.TEST3;
 		}
 	}

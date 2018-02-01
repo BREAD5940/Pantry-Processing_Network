@@ -28,14 +28,17 @@ public class DivisionValueNode extends ValueNode<Double> {
 	 *            This' Network.
 	 * @param logger
 	 *            This' Network.
+	 * @param label
+	 *            This' label.
 	 * @param dividendValueNode
 	 *            The ValueNode to divide.
 	 * @param divisorValueNode
 	 *            The ValueNode to divide by.
 	 */
-	public DivisionValueNode(Network network, Logger logger, ValueNode<? extends Number> dividendValueNode,
-			ValueNode<? extends Number> divisorValueNode) throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, dividendValueNode, divisorValueNode);
+	public DivisionValueNode(Network network, Logger logger, String label,
+			ValueNode<? extends Number> dividendValueNode, ValueNode<? extends Number> divisorValueNode)
+			throws IllegalArgumentException, IllegalStateException {
+		super(network, logger, label, dividendValueNode, divisorValueNode);
 
 		this.dividendValueNode = dividendValueNode;
 		this.divisorValueNode = divisorValueNode;
@@ -43,38 +46,46 @@ public class DivisionValueNode extends ValueNode<Double> {
 
 	/**
 	 * The number is converted to a constant value node and that is used as the
-	 * value to divide by.
+	 * value to divide by. The label for the constant value node will be "Constant
+	 * Divisor: " + label.
 	 * 
 	 * @param network
 	 *            This' Network
 	 * @param logger
 	 *            This' Logger
+	 * @param label
+	 *            This' label.
 	 * @param dividend
 	 *            The ValueNode to divide.
 	 * @param divisor
 	 *            The constant number to divide the ValueNode by.
 	 */
-	public DivisionValueNode(Network network, Logger logger, ValueNode<? extends Number> dividendValueNode,
-			double divisor) {
-		this(network, logger, dividendValueNode, new ConstantValueNode<>(network, logger, divisor));
+	public DivisionValueNode(Network network, Logger logger, String label,
+			ValueNode<? extends Number> dividendValueNode, double divisor) {
+		this(network, logger, label, dividendValueNode,
+				new ConstantValueNode<>(network, logger, "Constant Divisor: " + label, divisor));
 	}
 
 	/**
 	 * The number is converted to a constant value node and that is used as the
-	 * value to divide.
+	 * value to divide. The label for the constant value node will be "Constant
+	 * Dividend: " + label.
 	 * 
 	 * @param network
 	 *            This' Network
 	 * @param logger
 	 *            This' Logger
+	 * @param label
+	 *            This' label.
 	 * @param dividend
 	 *            The constant number to divide.
 	 * @param divisor
 	 *            The ValueNode to divide the constant by.
 	 */
-	public DivisionValueNode(Network network, Logger logger, double dividend,
+	public DivisionValueNode(Network network, Logger logger, String label, double dividend,
 			ValueNode<? extends Number> divisorValueNode) {
-		this(network, logger, new ConstantValueNode<>(network, logger, dividend), divisorValueNode);
+		this(network, logger, label, new ConstantValueNode<>(network, logger, "Constant Dividend: " + label, dividend),
+				divisorValueNode);
 	}
 
 	@Override

@@ -19,15 +19,21 @@ public class NodeGroupTest {
 	public void testNodeGroup_Standard() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
 
-		ValueNode<?> valueNode1 = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
-		ValueNode<?> valueNode2 = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
+		ValueNode<?> valueNode1 = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
+		ValueNode<?> valueNode2 = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
 
-		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true, valueNode1, valueNode2);
-		Node node = new NodeTesterObject(network, FullSystemTest.defaultLogger, true, valueNode);
+		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true, valueNode1, valueNode2);
+		Node node = new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true,
+				valueNode);
 
-		ValueNode<?> randomNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
+		ValueNode<?> randomNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
 
-		NodeGroupTesterObject testGroup = new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, randomNode, node);
+		NodeGroupTesterObject testGroup = new NodeGroupTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, valueNode, randomNode, node);
 
 		Set<Node> outputNodeTest = new HashSet<>();
 		outputNodeTest.add(node);
@@ -43,34 +49,37 @@ public class NodeGroupTest {
 		network.start();
 	}
 
-	@Test (expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testNodeGroup_WrongNetwork_IllegalArgumentException() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		
+
 		Network wrongNetwork = new Network(2000, FullSystemTest.defaultLogger);
-		
-		ValueNode<?> valueNode = new ValueNodeTesterObject(wrongNetwork, FullSystemTest.defaultLogger, true);
-		
-		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode);
+
+		ValueNode<?> valueNode = new ValueNodeTesterObject(wrongNetwork, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
+
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, valueNode);
 	}
-	
-	@Test (expected = IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testNodeGroup_NullNode_IllegalArgumentException() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-				
-		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
-		
-		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, null);
+
+		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
+
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, valueNode, null);
 	}
-	
-	@Test (expected = IllegalStateException.class)
+
+	@Test(expected = IllegalStateException.class)
 	public void testNodeGroup_NetworkStarted_IllegalStateException() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		
-		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger, true);
-		
+
+		ValueNode<?> valueNode = new ValueNodeTesterObject(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, true);
+
 		network.start();
-		
-		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, valueNode, null);
+
+		new NodeGroupTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, valueNode, null);
 	}
 }

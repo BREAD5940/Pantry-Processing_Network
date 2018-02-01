@@ -1,5 +1,6 @@
 package org.team5940.pantry.processing_network.functional;
 
+import org.team5940.pantry.logging.LoggingUtils;
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
@@ -26,12 +27,16 @@ public class ConstantValueNode<T> extends ValueNode<T> {
 	 *            The network this node belongs to.
 	 * @param logger
 	 *            The Logger this node uses.
+	 * @param label
+	 *            This' label.
 	 * @param value
 	 *            The value this node always returns.
 	 */
-	public ConstantValueNode(Network network, Logger logger, T value)
+	public ConstantValueNode(Network network, Logger logger, String label, T value)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger);
+		super(network, logger, label);
+		
+		LoggingUtils.checkArgument(value);
 
 		this.value = value;
 	}
@@ -43,7 +48,6 @@ public class ConstantValueNode<T> extends ValueNode<T> {
 
 	@Override
 	protected T updateValue() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

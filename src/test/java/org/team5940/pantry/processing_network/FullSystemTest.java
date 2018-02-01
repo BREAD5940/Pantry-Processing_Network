@@ -6,6 +6,8 @@ import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.logging.messages.Message;
 
 public class FullSystemTest {
+	
+	public static String defaultLabel = "test label";
 
 	// TODO make this an actual logger type.
 	public static Logger defaultLogger = new Logger() {
@@ -52,7 +54,7 @@ class TestDriveTrainMotorLeft extends Node {
 
 	public TestDriveTrainMotorLeft(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, FullSystemTest.defaultLogger, requireUpdate, driveTrain);
+		super(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,  requireUpdate, driveTrain);
 		this.driveTrain = driveTrain;
 	}
 
@@ -74,7 +76,7 @@ class TestDriveTrainMotorRight extends Node {
 
 	public TestDriveTrainMotorRight(Network network, boolean requireUpdate, ValueNode<Integer[]> driveTrain)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, FullSystemTest.defaultLogger, requireUpdate, driveTrain);
+		super(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, requireUpdate, driveTrain);
 
 		this.driveTrain = driveTrain;
 	}
@@ -97,7 +99,7 @@ class TestDriveTrain extends ValueNode<Integer[]> {
 
 	public TestDriveTrain(Network network, boolean requireUpdate, ValueNode<Integer> leftInput,
 			ValueNode<Integer> rightInput) throws IllegalArgumentException, IllegalStateException {
-		super(network, FullSystemTest.defaultLogger, leftInput, rightInput);
+		super(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, leftInput, rightInput);
 
 		this.rightInput = rightInput;
 		this.leftInput = leftInput;
@@ -116,7 +118,7 @@ class TestControllerRightJoystick extends ValueNode<Integer> {
 
 	public TestControllerRightJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, FullSystemTest.defaultLogger);
+		super(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel);
 	}
 
 	@Override
@@ -143,7 +145,7 @@ class TestControllerLeftJoystick extends ValueNode<Integer> {
 
 	public TestControllerLeftJoystick(Network network, boolean requireUpdate)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, FullSystemTest.defaultLogger);
+		super(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel);
 	}
 
 	@Override

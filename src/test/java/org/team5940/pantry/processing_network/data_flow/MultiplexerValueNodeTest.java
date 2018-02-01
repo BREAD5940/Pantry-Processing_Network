@@ -13,7 +13,7 @@ import org.team5940.pantry.processing_network.functional.ConstantValueNode;
 import org.team5940.pantry.processing_network.functional.MultiplexerValueNode;
 
 public class MultiplexerValueNodeTest {
-	
+
 	public enum TestEnum {
 		TEST1, TEST2, TEST3
 	}
@@ -21,20 +21,22 @@ public class MultiplexerValueNodeTest {
 	@Test
 	public void testMultiplexerValueNode_General() throws InterruptedException {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
-		StateValueNodeTesterObject stateValueNode = new StateValueNodeTesterObject(network, FullSystemTest.defaultLogger);
+		StateValueNodeTesterObject stateValueNode = new StateValueNodeTesterObject(network,
+				FullSystemTest.defaultLogger, FullSystemTest.defaultLabel);
 		HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>> map = new HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>>();
 
-		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 0);
-		ConstantValueNode<Integer> test1Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 1);
+		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, 0);
+		ConstantValueNode<Integer> test1Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, 1);
 
 		map.put(null, testNullConst);
 		map.put(TestEnum.TEST1, test1Const);
-		map.put(TestEnum.TEST2, null);
 
-		MultiplexerValueNode<Integer, TestEnum> multi = new MultiplexerValueNode<Integer, TestEnum>(network, FullSystemTest.defaultLogger, 
-				stateValueNode, map);
+		MultiplexerValueNode<Integer, TestEnum> multi = new MultiplexerValueNode<Integer, TestEnum>(network,
+				FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, stateValueNode, map, 15);
 
-		new NodeTesterObject(network, FullSystemTest.defaultLogger, true, multi);
+		new NodeTesterObject(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, true, multi);
 
 		network.start();
 
@@ -44,7 +46,7 @@ public class MultiplexerValueNodeTest {
 
 		Thread.sleep(20);
 
-		assertEquals(null, multi.getValue());
+		assertEquals(15, (int) multi.getValue());
 
 		Thread.sleep(20);
 
@@ -52,7 +54,7 @@ public class MultiplexerValueNodeTest {
 
 		Thread.sleep(20);
 
-		assertEquals(null, multi.getValue());
+		assertEquals(15, (int) multi.getValue());
 
 		network.interrupt();
 	}
@@ -62,23 +64,29 @@ public class MultiplexerValueNodeTest {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
 		HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>> map = new HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>>();
 
-		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 0);
-		ConstantValueNode<Integer> test1Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 1);
-		ConstantValueNode<Integer> test2Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, 2);
+		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, 0);
+		ConstantValueNode<Integer> test1Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, 1);
+		ConstantValueNode<Integer> test2Const = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
+				FullSystemTest.defaultLabel, 2);
 
 		map.put(null, testNullConst);
 		map.put(TestEnum.TEST1, test1Const);
 		map.put(TestEnum.TEST2, test2Const);
 
-		new MultiplexerValueNode<Integer, TestEnum>(network, FullSystemTest.defaultLogger, null, map);
+		new MultiplexerValueNode<Integer, TestEnum>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,
+				null, map, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testMultiplexerValueNode_NullMap_IllegalArgumentException() throws InterruptedException {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
 
-		StateValueNodeTesterObject stateValueNode = new StateValueNodeTesterObject(network, FullSystemTest.defaultLogger);
+		StateValueNodeTesterObject stateValueNode = new StateValueNodeTesterObject(network,
+				FullSystemTest.defaultLogger, FullSystemTest.defaultLabel);
 
-		new MultiplexerValueNode<Integer, TestEnum>(network, FullSystemTest.defaultLogger, stateValueNode, null);
+		new MultiplexerValueNode<Integer, TestEnum>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel,
+				stateValueNode, null, 1);
 	}
 }

@@ -1,5 +1,6 @@
 package org.team5940.pantry.processing_network;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,40 +48,50 @@ public abstract class Node implements LabeledObject {
 	protected Logger logger;
 
 	/**
+	 * The label of this object.
+	 */
+	JsonArray label;
+
+	/**
 	 * Initialize a new Node.
 	 * 
 	 * @param network
 	 *            The {@link Network} that this node is a part of.
 	 * @param sources
-	 *            The {@link ValueNode}s used by this, if null assumes no
-	 *            sources.
+	 *            The {@link ValueNode}s used by this. This will verify that none of
+	 *            the sources are null.
 	 * @param logger
 	 *            The {@link Logger} for this to use.
 	 * @param requireUpdate
 	 *            Whether to, by default, require updates. The requiresUpdate()
 	 *            method can always be overridden to change behavior.
+	 * @param label
+	 *            The label this node returns as part of labeled object. Should
+	 *            typically use the other constructor for ease of use.
 	 * @throws IllegalArgumentException
-	 *             network is null, or one of the {@link ValueNode}s in source
-	 *             is null.
+	 *             network is null, or one of the {@link ValueNode}s in source is
+	 *             null.
 	 * @throws IllegalStateException
 	 *             network has already been started.
 	 */
-	public Node(Network network, Logger logger, boolean requireUpdate, ValueNode<?>... sourcesArray)
+	public Node(Network network, Logger logger, JsonArray label, boolean requireUpdate, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
 
-		Set<ValueNode<?>> sources;
-
-		if (sourcesArray == null) {
-			sources = new HashSet<>();
-		} else {
-			sources = generateSourcesSet(sourcesArray);
-		}
+		System.out.println("Sources Array: " + Arrays.toString(sourcesArray));
 
 		if (logger == null) {
 			throw new IllegalArgumentException("Logger is null");
 		}
 
 		this.logger = logger;
+
+		Set<ValueNode<?>> sources = null;
+
+		if (sourcesArray == null) {
+			this.logger.throwError(this, new IllegalArgumentException("Sources Array Null"));
+		} else {
+			sources = generateSourcesSet(sourcesArray);
+		}
 
 		if (network == null) {
 			this.logger.throwError(this, new IllegalArgumentException("Null Network"));
@@ -96,16 +107,43 @@ public abstract class Node implements LabeledObject {
 			}
 		}
 
+		if (label == null) {
+			this.logger.throwError(this, new IllegalArgumentException("Label is Null"));
+		}
+
 		this.sources = sources;
 		this.network = network;
 		this.requireUpdate = requireUpdate;
 		this.network.addNode(this);
 
+		this.label = new JsonArray();
+		this.label.addAll(label);
+		this.label.add("Node");
 	}
 
 	/**
-	 * Creates a set of sources from varargs. This is used to make setting
-	 * sources easier when using super constructor of node.
+	 * Initializes a new Node.
+	 * 
+	 * @param network
+	 *            The {@link Network} that this node is a part of.
+	 * @param logger
+	 *            The {@link Logger} for this to use.
+	 * @param requireUpdate
+	 *            Whether to, by default, require updates. The requiresUpdate()
+	 *            method can always be overridden to change behavior.
+	 * @param label
+	 *            The label that belongs to this Node.
+	 * @param sourcesArray
+	 *            The {@link ValueNode}s used by this. This will verify that none of
+	 *            the sources are null.
+	 */
+	public Node(Network network, Logger logger, String label, boolean requireUpdate, ValueNode<?>... sourcesArray) {
+		this(network, logger, LoggingUtils.chainPut(new JsonArray(), label), requireUpdate, sourcesArray);
+	}
+
+	/**
+	 * Creates a set of sources from varargs. This is used to make setting sources
+	 * easier when using super constructor of node.
 	 * 
 	 * @param sourcesArray
 	 *            The array of different sources the node is using.
@@ -114,16 +152,14 @@ public abstract class Node implements LabeledObject {
 	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
 		Set<ValueNode<?>> sources = new HashSet<ValueNode<?>>();
 		for (ValueNode<?> source : sourcesArray) {
-			if (source != null) {
-				sources.add(source);
-			}
+			sources.add(source);
 		}
 		return sources;
 	}
 
 	/**
-	 * Internal method for performing the node's update. It can only be called 0
-	 * or 1 time(s) per Network cycle.
+	 * Internal method for performing the node's update. It can only be called 0 or
+	 * 1 time(s) per Network cycle.
 	 */
 	protected abstract void doUpdate();
 
@@ -155,13 +191,13 @@ public abstract class Node implements LabeledObject {
 	}
 
 	/**
-	 * This method is used to tell the network whether the node requires an
-	 * update (update() will be definitely be called this cycle). It should NOT
-	 * be assumed that this method will only be called once per cycle and the
-	 * value should not change in successive calls in the same cycle.
+	 * This method is used to tell the network whether the node requires an update
+	 * (update() will be definitely be called this cycle). It should NOT be assumed
+	 * that this method will only be called once per cycle and the value should not
+	 * change in successive calls in the same cycle.
 	 * 
-	 * @return True if this node should be updated this cycle, false if it can
-	 *         be not updated.
+	 * @return True if this node should be updated this cycle, false if it can be
+	 *         not updated.
 	 */
 	public boolean requiresUpdate() {
 		return this.requireUpdate;
@@ -169,9 +205,9 @@ public abstract class Node implements LabeledObject {
 
 	/**
 	 * Gets the {@link ValueNode}s (within its network) that this Node retrieves
-	 * data from. Sources should not change after initialization. The set
-	 * returned must be clone and not any internally used reference. If this
-	 * does not have any sources it should return an empty Set, NOT null.
+	 * data from. Sources should not change after initialization. The set returned
+	 * must be clone and not any internally used reference. If this does not have
+	 * any sources it should return an empty Set, NOT null.
 	 * 
 	 * @return A Set containing any Nodes that this uses.
 	 */
@@ -193,10 +229,9 @@ public abstract class Node implements LabeledObject {
 	}
 
 	/**
-	 * Gets the last cycle that this completed an update. If this method is
-	 * called in the middle of an node update it will return the last cycle
-	 * before this one that it updated. If it has never been updated it will
-	 * return -1.
+	 * Gets the last cycle that this completed an update. If this method is called
+	 * in the middle of an node update it will return the last cycle before this one
+	 * that it updated. If it has never been updated it will return -1.
 	 * 
 	 * @return The last cycle this node updated.
 	 * @throws IllegalStateException
@@ -210,8 +245,7 @@ public abstract class Node implements LabeledObject {
 
 	@Override
 	public JsonArray getLabel() {
-		// TODO Find way to force children to override this method.
-		return LoggingUtils.chainPut(new JsonArray(), "Node");
+		return this.label;
 	}
 
 }
