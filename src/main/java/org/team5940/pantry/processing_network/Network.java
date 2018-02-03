@@ -21,7 +21,7 @@ import java.util.HashSet;
  * of time it actually takes a network to complete a cycle and potentially the
  * accuracy of System.nanoTime()) cycles may occur more slowly than specified
  * but they will never occur more quickly. For timing needs inside of Nodes,
- * {@link Network#getNetworkTime()} is available. <br>
+ * {@link Network#getLastCycleStart()} is available. <br>
  * <br>
  * Nodes are added to a network automatically when they are initialized (as long
  * as the network has not already been started). Nodes must declare on
@@ -191,12 +191,7 @@ public class Network extends Thread implements LabeledObject {
 		return this.cycleDelay;
 	}
 
-	/**
-	 * Gets the last cycle this network started (potentially a currently
-	 * executing cycle).
-	 * 
-	 * @return The current cycle this Network is on.
-	 */
+	
 	/**
 	 * Gets the last cycle this network started (potentially a currently
 	 * executing cycle).
