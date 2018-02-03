@@ -57,7 +57,25 @@ public abstract class ValueNode<T extends Object> extends Node {
 	 */
 	public ValueNode(Network network, Logger logger, JsonArray label, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, LoggingUtils.chainPut(label, "Value Node"), false, sourcesArray);
+		this(network, logger, LoggingUtils.chainPut(label, "Value Node"), false, sourcesArray);
+	}
+	
+	/**
+	 * Uses a JsonArray as its label. The labels for Value Node and Node will
+	 * automatically be added.
+	 * 
+	 * @param network
+	 *            This' Network.
+	 * @param logger
+	 *            This Logger.
+	 * @param label
+	 *            The label that describes the Node.
+	 * @param sourcesArray
+	 *            The ValueNodes this relies on.
+	 */
+	public ValueNode(Network network, Logger logger, JsonArray label, boolean requiresUpdate, ValueNode<?>... sourcesArray)
+			throws IllegalArgumentException, IllegalStateException {
+		super(network, logger, LoggingUtils.chainPut(label, "Value Node"), requiresUpdate, sourcesArray);
 	}
 
 	/**

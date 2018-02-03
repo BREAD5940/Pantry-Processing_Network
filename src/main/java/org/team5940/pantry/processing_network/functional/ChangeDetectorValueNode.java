@@ -1,9 +1,12 @@
 package org.team5940.pantry.processing_network.functional;
 
+import org.team5940.pantry.logging.LoggingUtils;
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
-import org.team5940.pantry.processing_network.Node;
+import org.team5940.pantry.processing_network.ProcessingNetworkUtils;
 import org.team5940.pantry.processing_network.ValueNode;
+
+import com.google.gson.JsonArray;
 
 /**
  * This detects when the value of a ValueNode is changed. When the value is
@@ -16,15 +19,17 @@ import org.team5940.pantry.processing_network.ValueNode;
  * @author Michael Bentley
  *
  * @param <T>
- *            The type of value the ValueNode returns.
+ *            The type of value the change ValueNode returns.
+ * @param <V>
+ *            The type of value this ValueNode returns.
  */
 
-public abstract class ChangeDetectorNode<T> extends Node {
+public abstract class ChangeDetectorValueNode<T, V> extends ValueNode<V> {
 
 	/**
 	 * The ValueNode to check when the value has changed.
 	 */
-	ValueNode<T> source;
+	ValueNode<? extends T> source;
 
 	/**
 	 * The previous value of the ValueNode to compare the new value against.
@@ -39,16 +44,20 @@ public abstract class ChangeDetectorNode<T> extends Node {
 	 *            This' Network
 	 * @param logger
 	 *            This' Logger
-	 *            @param label
+	 * @param label
 	 *            This' label.
 	 * @param requireUpdate
 	 *            If this should be updated.
 	 * @param source
 	 *            The ValueNode to check if the value has changed.
+	 * @param otherSource
+	 *            The other sources for this ValueNode.
 	 */
-	public ChangeDetectorNode(Network network, Logger logger, String label, boolean requireUpdate, ValueNode<T> source)
+	public ChangeDetectorValueNode(Network network, Logger logger, String label, boolean requiresUpdate,
+			ValueNode<? extends T> source, ValueNode<?>... otherSources)
 			throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, label, requireUpdate, source);
+		super(network, logger, LoggingUtils.chainPut(new JsonArray(), label), requiresUpdate,
+				ProcessingNetworkUtils.concatValueNodes(source, otherSources));
 		this.source = source;
 	}
 
@@ -60,10 +69,12 @@ public abstract class ChangeDetectorNode<T> extends Node {
 			this.previousValue = this.source.getValue();
 			this.valueChanged(this.source.getValue());
 		}
+		super.doUpdate();
 	}
 
 	/**
-	 * Run when the value of the ValueNode has changed.
+	 * Run when the value of the ValueNode has changed. This is run before
+	 * doUpdate() is run so what this edits will be activated for the latest cycle.
 	 * 
 	 * @param newValue
 	 *            The new value of the ValueNode.
