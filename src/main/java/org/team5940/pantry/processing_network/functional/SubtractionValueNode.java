@@ -5,7 +5,7 @@ import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
 
 /**
- * Subtracts the second number from the first. 
+ * Subtracts the second number from the first.
  * 
  * 
  * @author Paul Dowd
@@ -13,18 +13,17 @@ import org.team5940.pantry.processing_network.ValueNode;
  */
 
 public class SubtractionValueNode extends ValueNode<Double> {
-	
-	
+
 	/**
 	 * The starting value node
 	 */
-	
+
 	ValueNode<? extends Number> minuendValueNode;
-	
+
 	/**
 	 * The value node being subtracted
 	 */
-	
+
 	ValueNode<? extends Number> subtrahendValueNode;
 
 	/**
@@ -32,23 +31,26 @@ public class SubtractionValueNode extends ValueNode<Double> {
 	 * Subtracts the subtrahend node from the minuend node.
 	 * 
 	 * @param network
-	 * 				This' network
+	 *            This' network
 	 * @param logger
-	 * 				This' logger
+	 *            This' logger
+	 * @param label
+	 *            This' label
 	 * @param minuendValueNode
-	 * 				The value node being subtracted from
+	 *            The value node being subtracted from
 	 * @param subtrahendValueNode
-	 * 				The value node being subtracted
+	 *            The value node being subtracted
 	 */
-	
-	public SubtractionValueNode(Network network, Logger logger, ValueNode<? extends Number> minuendValueNode,
-			ValueNode<? extends Number> subtrahendValueNode) throws IllegalArgumentException, IllegalStateException {
-		super(network, logger, minuendValueNode, subtrahendValueNode);
-		
+
+	public SubtractionValueNode(Network network, Logger logger, String label,
+			ValueNode<? extends Number> minuendValueNode, ValueNode<? extends Number> subtrahendValueNode)
+			throws IllegalArgumentException, IllegalStateException {
+		super(network, logger, label, minuendValueNode, subtrahendValueNode);
+
 		this.minuendValueNode = minuendValueNode;
 		this.subtrahendValueNode = subtrahendValueNode;
 	}
-	
+
 	/**
 	 * 
 	 * subtracts the subtrahend node from the minuend node
@@ -56,20 +58,23 @@ public class SubtractionValueNode extends ValueNode<Double> {
 	 * The first constructor makes the subtrahend a constant
 	 * 
 	 * @param network
-	 * 				This' network
+	 *            This' network
 	 * @param logger
-	 * 				This' logger
+	 *            This' logger
+	 * @param label
+	 *            This' label
 	 * @param minuendValueNode
-	 * 				The value node being subtracted from
+	 *            The value node being subtracted from
 	 * @param subtrahend
-	 * 				The value node being subtracted
+	 *            The value node being subtracted
 	 */
-	
-	public SubtractionValueNode(Network network, Logger logger, ValueNode<? extends Number> minuendValueNode,
-			double subtrahend) {
-		this(network, logger, minuendValueNode, new ConstantValueNode<>(network, logger, subtrahend));
+
+	public SubtractionValueNode(Network network, Logger logger, String label,
+			ValueNode<? extends Number> minuendValueNode, double subtrahend) {
+		this(network, logger, label, minuendValueNode,
+				new ConstantValueNode<>(network, logger, label + ": Subtrahend Constant", subtrahend));
 	}
-	
+
 	/**
 	 * 
 	 * subtracts the subtrahend node from the minuend node
@@ -77,23 +82,25 @@ public class SubtractionValueNode extends ValueNode<Double> {
 	 * The constructor makes the minuend a constant
 	 * 
 	 * @param network
-	 * 				This' network
+	 *            This' network
 	 * @param logger
-	 * 				This' logger
+	 *            This' logger
+	 * @param label
+	 *            This' label
 	 * @param minuendValueNode
-	 * 				The value node being subtracted from
+	 *            The value node being subtracted from
 	 * @param subtrahend
-	 * 				The value node being subtracted
+	 *            The value node being subtracted
 	 */
-	
-	public SubtractionValueNode(Network network, Logger logger, double minuend, 
+
+	public SubtractionValueNode(Network network, Logger logger, String label, double minuend,
 			ValueNode<? extends Number> subtrahendValueNode) {
-		this(network, logger, subtrahendValueNode, new ConstantValueNode<>(network, logger, minuend));
+		this(network, logger, label, subtrahendValueNode,
+				new ConstantValueNode<>(network, logger, label + ": Minuend Constant", minuend));
 	}
 
 	@Override
 	protected Double updateValue() {
 		return this.minuendValueNode.getValue().doubleValue() - this.subtrahendValueNode.getValue().doubleValue();
 	}
-
 }
