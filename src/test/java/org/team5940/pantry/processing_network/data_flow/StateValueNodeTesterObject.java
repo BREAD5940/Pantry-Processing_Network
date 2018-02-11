@@ -5,7 +5,7 @@ import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
 import org.team5940.pantry.processing_network.data_flow.MultiplexerValueNodeTest.TestEnum;
 
-public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnum>> {
+public class StateValueNodeTesterObject extends ValueNode<TestEnum> {
 
 	int currentRun = -1;
 
@@ -15,7 +15,7 @@ public class StateValueNodeTesterObject extends ValueNode<Enum<? extends TestEnu
 	}
 
 	@Override
-	protected Enum<? extends TestEnum> updateValue() {
+	protected TestEnum updateValue() {
 		currentRun++;
 		if (currentRun == 0) {
 			return TestEnum.TEST1;

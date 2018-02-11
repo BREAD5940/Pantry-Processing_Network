@@ -23,7 +23,7 @@ public class MultiplexerValueNodeTest {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
 		StateValueNodeTesterObject stateValueNode = new StateValueNodeTesterObject(network,
 				FullSystemTest.defaultLogger, FullSystemTest.defaultLabel);
-		HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>> map = new HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>>();
+		HashMap<TestEnum, ValueNode<? extends Integer>> map = new HashMap<TestEnum, ValueNode<? extends Integer>>();
 
 		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
 				FullSystemTest.defaultLabel, 0);
@@ -62,7 +62,7 @@ public class MultiplexerValueNodeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testMultiplexerValueNode_NullEnumValueNode_IllegalArgumentException() throws InterruptedException {
 		Network network = new Network(20000, FullSystemTest.defaultLogger);
-		HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>> map = new HashMap<Enum<? extends TestEnum>, ValueNode<? extends Integer>>();
+		HashMap<TestEnum, ValueNode<? extends Integer>> map = new HashMap<TestEnum, ValueNode<? extends Integer>>();
 
 		ConstantValueNode<Integer> testNullConst = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger,
 				FullSystemTest.defaultLabel, 0);
