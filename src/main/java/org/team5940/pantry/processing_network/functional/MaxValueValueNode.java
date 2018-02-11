@@ -7,20 +7,20 @@ import org.team5940.pantry.processing_network.ValueNode;
 /**
  * This stores the max value ever returned by the inputed ValueNode. This
  * ValueNode is good for tuning PID to see how far the specified value was
- * overshot. This ValueNode is mostly used for logging. 
+ * overshot. This ValueNode is mostly used for logging.
  * 
- * @author mbent
+ * @author Michael Bentley
  *
  */
 public class MaxValueValueNode extends ValueNode<Double> {
 
 	/**
-	 * The ValueNode to track the max value of. 
+	 * The ValueNode to track the max value of.
 	 */
 	ValueNode<? extends Number> valueNode;
-	
+
 	/**
-	 * The max value ever returned by the ValueNode. 
+	 * The max value ever returned by the ValueNode.
 	 */
 	Double maxValue;
 
