@@ -20,19 +20,19 @@ import org.team5940.pantry.processing_network.ValueNode;
  * @param <S>
  *            The type of Enum this MultiplexerValueNode corresponds to.
  */
-public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends ValueNode<T> {
+public class MultiplexerValueNode<T, S extends Enum<S>> extends ValueNode<T> {
 
 	/**
 	 * A source that returns the current state which tells what the
 	 * MultiplexerValueNode should return.
 	 */
-	ValueNode<Enum<? extends S>> stateSource;
+	ValueNode<S> stateSource;
 
 	/**
 	 * A map of different enum values corresponding to ValueNodes. This tells what
 	 * this node should return based on what the enum from the stateSource.
 	 */
-	Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap;
+	Map<S, ValueNode<? extends T>> valueSourcesMap;
 
 	/**
 	 * The default value to return when there is no node corresponding to the enum
@@ -67,8 +67,8 @@ public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends V
 	 * @throws IllegalStateException
 	 *             If the network is already running.
 	 */
-	public MultiplexerValueNode(Network network, Logger logger, String label, ValueNode<Enum<? extends S>> stateSource,
-			Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap, ValueNode<? extends T> defaultValueNode)
+	public MultiplexerValueNode(Network network, Logger logger, String label, ValueNode<S> stateSource,
+			Map<S, ValueNode<? extends T>> valueSourcesMap, ValueNode<? extends T> defaultValueNode)
 			throws IllegalArgumentException, IllegalStateException {
 		super(network, logger, label, ProcessingNetworkUtils.concatValueNodes(
 				ProcessingNetworkUtils.valueNodesMapToArray(valueSourcesMap), stateSource, defaultValueNode));
@@ -105,17 +105,17 @@ public class MultiplexerValueNode<T extends Object, S extends Enum<S>> extends V
 	 *            value to use. The label will be "Multiplexer Constant Default
 	 *            Value: " + label.
 	 */
-	public MultiplexerValueNode(Network network, Logger logger, String label, ValueNode<Enum<? extends S>> stateSource,
-			Map<Enum<? extends S>, ValueNode<? extends T>> valueSourcesMap, T defaultValue) {
+	public MultiplexerValueNode(Network network, Logger logger, String label, ValueNode<S> stateSource,
+			Map<S, ValueNode<? extends T>> valueSourcesMap, T defaultValue) {
 		this(network, logger, label, stateSource, valueSourcesMap,
 				new ConstantValueNode<>(network, logger, "Multiplexer Constant Default Value: " + label, defaultValue));
-		
+
 		LoggingUtils.checkArgument(valueSourcesMap);
 	}
 
 	@Override
 	protected T updateValue() {
-		Enum<? extends S> currentEnum = this.stateSource.getValue();
+		S currentEnum = this.stateSource.getValue();
 		ValueNode<? extends T> sourceNode = this.valueSourcesMap.get(currentEnum);
 		return (sourceNode != null) ? sourceNode.getValue() : this.defaultValueNode.getValue();
 	}
