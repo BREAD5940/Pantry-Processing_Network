@@ -20,8 +20,6 @@ import com.google.gson.JsonArray;
  */
 public abstract class Node implements LabeledObject {
 
-	// TODO rename network cycle naming.
-
 	/**
 	 * Stores this' {@link Network}.
 	 */
@@ -226,6 +224,15 @@ public abstract class Node implements LabeledObject {
 	 */
 	public Network getNetwork() {
 		return this.network;
+	}
+
+	/**
+	 * Gets this {@link Logger}
+	 * 
+	 * @return This' Logger.
+	 */
+	public Logger getLogger() {
+		return logger;
 	}
 
 	/**
