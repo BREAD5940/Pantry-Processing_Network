@@ -9,7 +9,6 @@ public class FullSystemTest {
 	
 	public static String defaultLabel = "test label";
 
-	// TODO make this an actual logger type.
 	public static Logger defaultLogger = new Logger() {
 
 		@Override
