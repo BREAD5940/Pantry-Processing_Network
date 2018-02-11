@@ -39,7 +39,7 @@ public abstract class ValueNode<T extends Object> extends Node {
 	 */
 	public ValueNode(Network network, Logger logger, String label, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
-		this(network, logger, LoggingUtils.chainPut(new JsonArray(), label), sourcesArray);
+		this(network, logger, label, false, sourcesArray);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public abstract class ValueNode<T extends Object> extends Node {
 			throws IllegalArgumentException, IllegalStateException {
 		this(network, logger, LoggingUtils.chainPut(label, "Value Node"), false, sourcesArray);
 	}
-	
+
 	/**
 	 * Uses a JsonArray as its label. The labels for Value Node and Node will
 	 * automatically be added.
@@ -70,12 +70,34 @@ public abstract class ValueNode<T extends Object> extends Node {
 	 *            This Logger.
 	 * @param label
 	 *            The label that describes the Node.
+	 * @param requiresUpdate
+	 *            If this node should be updated every cycle no matter what.
 	 * @param sourcesArray
 	 *            The ValueNodes this relies on.
 	 */
-	public ValueNode(Network network, Logger logger, JsonArray label, boolean requiresUpdate, ValueNode<?>... sourcesArray)
-			throws IllegalArgumentException, IllegalStateException {
+	public ValueNode(Network network, Logger logger, JsonArray label, boolean requiresUpdate,
+			ValueNode<?>... sourcesArray) throws IllegalArgumentException, IllegalStateException {
 		super(network, logger, LoggingUtils.chainPut(label, "Value Node"), requiresUpdate, sourcesArray);
+	}
+
+	/**
+	 * Uses a JsonArray as its label. The labels for Value Node and Node will
+	 * automatically be added.
+	 * 
+	 * @param network
+	 *            This' Network.
+	 * @param logger
+	 *            This Logger.
+	 * @param label
+	 *            The label that describes the Node.
+	 * @param requiresUpdate
+	 *            If this node should be updated every cycle no matter what.
+	 * @param sourcesArray
+	 *            The ValueNodes this relies on.
+	 */
+	public ValueNode(Network network, Logger logger, String label, boolean requiresUpdate, ValueNode<?>... sourcesArray)
+			throws IllegalArgumentException, IllegalStateException {
+		this(network, logger, LoggingUtils.chainPut(new JsonArray(), label), sourcesArray);
 	}
 
 	/**
