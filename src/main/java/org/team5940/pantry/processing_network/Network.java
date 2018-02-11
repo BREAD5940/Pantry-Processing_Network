@@ -92,7 +92,6 @@ public class Network extends Thread implements LabeledObject {
 		}
 		this.logger = logger;
 		if (cycleDelay < 0) {
-			// TODO make it easier to log errors.
 			this.logger.throwError(this, new IllegalArgumentException("Illegal Value For cycleDelay"));
 		}
 		this.cycleDelay = cycleDelay;
@@ -103,49 +102,32 @@ public class Network extends Thread implements LabeledObject {
 	public void run() {
 		this.startTime = microTime();
 		while (!this.isInterrupted()) {
-			startCycle();
-			runNodeUpdates();
-			endCycleAndDelay();
-		}
-	}
-
-	// TODO javadoc
-	private void startCycle() {
-		this.lastCycleStart = microTime();
-		this.currentCycle++;
-	}
-
-	// TODO javadoc
-	private void runNodeUpdates() {
-		for (Node node : this.nodes) {
-			if (node.requiresUpdate()) {
-				try {
-					node.update();
-				} catch (IllegalUpdateThreadException e) {
-					// TODO log
+			// Starts cycle.
+			this.lastCycleStart = microTime();
+			this.currentCycle++;
+			// Updates Nodes.
+			for (Node node : this.nodes) {
+				if (node.requiresUpdate()) {
+					try {
+						node.update();
+					} catch (IllegalUpdateThreadException e) {
+						this.logger.log(new ErrorEventMessage(this, e));
+					}
 				}
 			}
-		}
-	}
+			// Ends cycle and delays extra time.
+			long cycleEndTime = microTime();
+			long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
 
-	// TODO javadoc
-	private void endCycleAndDelay() {
-		long cycleEndTime = microTime();
-		long extraTime = this.cycleDelay - (cycleEndTime - this.lastCycleStart);
-
-		waitCycleDelayPeriod(extraTime);
-	}
-
-	// TODO javadoc
-	private void waitCycleDelayPeriod(long extraTime) {
-		if (extraTime > 0) {
-			try {
-				Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000));
-			} catch (InterruptedException e) {
-				this.logger.log(new ErrorEventMessage(this, e));
+			if (extraTime > 0) {
+				try {
+					Thread.sleep(Math.floorDiv(extraTime, 1000), (int) Math.floorMod(extraTime, 1000));
+				} catch (InterruptedException e) {
+					this.logger.log(new ErrorEventMessage(this, e));
+				}
+			} else {
+				this.logger.log(new NumberValueMessage(this, extraTime, NumberValueMessage.MICROSECONDS_UNIT));
 			}
-		} else {
-			this.logger.log(new NumberValueMessage(this, extraTime, NumberValueMessage.MICROSECONDS_UNIT));
 		}
 	}
 
@@ -157,8 +139,8 @@ public class Network extends Thread implements LabeledObject {
 	 * @throws IllegalStateException
 	 *             the Network has already been started.
 	 * @throws IllegalArgumentException
-	 *             node is null, this isn't its network, or it enumerates
-	 *             sources that aren't a part of this network.
+	 *             node is null, this isn't its network, or it enumerates sources
+	 *             that aren't a part of this network.
 	 */
 	protected synchronized void addNode(Node node) throws IllegalStateException, IllegalArgumentException {
 		argumentChecksForAddNode(node);
@@ -191,10 +173,9 @@ public class Network extends Thread implements LabeledObject {
 		return this.cycleDelay;
 	}
 
-	
 	/**
-	 * Gets the last cycle this network started (potentially a currently
-	 * executing cycle).
+	 * Gets the last cycle this network started (potentially a currently executing
+	 * cycle).
 	 * 
 	 * @return The current cycle this Network is on.
 	 * @throws IllegalStateException
@@ -205,14 +186,13 @@ public class Network extends Thread implements LabeledObject {
 			return currentCycle;
 		} else {
 			this.logger.throwError(this, new IllegalStateException("Network not started"));
-			// TODO should not have to write this return line.
 			return 0;
 		}
 	}
 
 	/**
-	 * Gets the time in microseconds from when the network started to the start
-	 * of the last cycle (potentially a currently executing cycle).
+	 * Gets the time in microseconds from when the network started to the start of
+	 * the last cycle (potentially a currently executing cycle).
 	 * 
 	 * @return Microseconds since network start to last cycle start.
 	 * @throws IllegalStateException
@@ -223,7 +203,6 @@ public class Network extends Thread implements LabeledObject {
 			return this.lastCycleStart - this.startTime;
 		} else {
 			this.logger.throwError(this, new IllegalStateException("Network not started"));
-			// TODO should not have to write this return line.
 			return 0;
 		}
 	}
