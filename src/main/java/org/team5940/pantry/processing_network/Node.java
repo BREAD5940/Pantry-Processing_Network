@@ -75,8 +75,6 @@ public abstract class Node implements LabeledObject {
 	public Node(Network network, Logger logger, JsonArray label, boolean requireUpdate, ValueNode<?>... sourcesArray)
 			throws IllegalArgumentException, IllegalStateException {
 
-		System.out.println("Sources Array: " + Arrays.toString(sourcesArray));
-
 		if (logger == null) {
 			throw new IllegalArgumentException("Logger is null");
 		}
