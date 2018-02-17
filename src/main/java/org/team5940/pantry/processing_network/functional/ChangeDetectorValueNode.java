@@ -11,7 +11,8 @@ import com.google.gson.JsonArray;
 /**
  * This detects when the value of a ValueNode is changed. When the value is
  * changed this runs valueChanged with the new value as the argument. This uses
- * .equals to see if the value has changed.
+ * .equals to see if the value has changed. It will run when on the initial
+ * value of the Node is returned.
  * 
  * IMPORTANT. This should not be used to edit variables but only other nodes.
  * IMPORTANT
@@ -63,10 +64,9 @@ public abstract class ChangeDetectorValueNode<T, V> extends ValueNode<V> {
 
 	@Override
 	protected void doUpdate() {
-		if (this.previousValue == null) {
+		if (!this.source.getValue().equals(this.previousValue)) {
 			this.previousValue = this.source.getValue();
-		} else if (!this.previousValue.equals(this.source.getValue())) {
-			this.previousValue = this.source.getValue();
+
 			this.valueChanged(this.source.getValue());
 		}
 		super.doUpdate();
