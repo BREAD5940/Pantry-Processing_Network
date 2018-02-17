@@ -1,4 +1,4 @@
-package org.team5940.pantry.processing_network.functional;
+package org.team5940.pantry.processing_network.functional.related_to_enums;
 
 import java.util.Map;
 
@@ -7,6 +7,7 @@ import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ProcessingNetworkUtils;
 import org.team5940.pantry.processing_network.ValueNode;
+import org.team5940.pantry.processing_network.functional.constant_Or_Similar.ConstantValueNode;
 
 /**
  * A ValueNode that returns a value based on the state the Enum SourceNode is

@@ -9,8 +9,8 @@ import org.team5940.pantry.processing_network.FullSystemTest;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.NodeTesterObject;
 import org.team5940.pantry.processing_network.ValueNode;
-import org.team5940.pantry.processing_network.functional.ConstantValueNode;
-import org.team5940.pantry.processing_network.functional.MultiplexerValueNode;
+import org.team5940.pantry.processing_network.functional.constant_Or_Similar.ConstantValueNode;
+import org.team5940.pantry.processing_network.functional.related_to_enums.MultiplexerValueNode;
 
 public class MultiplexerValueNodeTest {
 
