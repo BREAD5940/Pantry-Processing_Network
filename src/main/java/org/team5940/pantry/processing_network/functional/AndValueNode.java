@@ -60,7 +60,7 @@ public class AndValueNode extends ValueNode<Boolean> {
 		 * returns it
 		 */
 
-		if (this.valueNode1.getValue() == true && valueNode2.getValue() == true) {
+		if (this.valueNode1.getValue() && valueNode2.getValue()) {
 			bothBooleansTrue = true;
 		}
 
