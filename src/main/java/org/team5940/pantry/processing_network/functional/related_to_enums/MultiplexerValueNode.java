@@ -7,7 +7,7 @@ import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ProcessingNetworkUtils;
 import org.team5940.pantry.processing_network.ValueNode;
-import org.team5940.pantry.processing_network.functional.constant_Or_Similar.ConstantValueNode;
+import org.team5940.pantry.processing_network.functional.constant_or_similar.ConstantValueNode;
 
 /**
  * A ValueNode that returns a value based on the state the Enum SourceNode is

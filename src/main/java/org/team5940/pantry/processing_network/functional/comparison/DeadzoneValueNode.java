@@ -3,7 +3,7 @@ package org.team5940.pantry.processing_network.functional.comparison;
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
-import org.team5940.pantry.processing_network.functional.constant_Or_Similar.ConstantValueNode;
+import org.team5940.pantry.processing_network.functional.constant_or_similar.ConstantValueNode;
 
 /**
  * This is used as a deadzone for a ValueNode. If the value of the specified

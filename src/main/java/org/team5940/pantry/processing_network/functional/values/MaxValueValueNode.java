@@ -1,4 +1,4 @@
-package org.team5940.pantry.processing_network.functional.Values;
+package org.team5940.pantry.processing_network.functional.values;
 
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;

@@ -1,4 +1,4 @@
-package org.team5940.pantry.processing_network.functional.constant_Or_Similar;
+package org.team5940.pantry.processing_network.functional.constant_or_similar;
 
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
