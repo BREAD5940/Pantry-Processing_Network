@@ -41,15 +41,6 @@ public class ConstantValueNodeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstantValueNode_NullValue() {
 		Network network = new Network(2000, FullSystemTest.defaultLogger);
-		ConstantValueNode<Integer> constantValue = new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, null);
-		assertEquals(null, constantValue.getValue());
-		network.start();
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		assertEquals(null, constantValue.getValue());
-		network.interrupt();
+		new ConstantValueNode<Integer>(network, FullSystemTest.defaultLogger, FullSystemTest.defaultLabel, null);
 	}
 }
