@@ -55,9 +55,6 @@ public abstract class Node implements LabeledObject {
 	 * 
 	 * @param network
 	 *            The {@link Network} that this node is a part of.
-	 * @param sources
-	 *            The {@link ValueNode}s used by this. This will verify that none of
-	 *            the sources are null.
 	 * @param logger
 	 *            The {@link Logger} for this to use.
 	 * @param requireUpdate
@@ -66,6 +63,9 @@ public abstract class Node implements LabeledObject {
 	 * @param label
 	 *            The label this node returns as part of labeled object. Should
 	 *            typically use the other constructor for ease of use.
+	 * @param sourcesArray
+	 *            The {@link ValueNode}s used by this. This will verify that none of
+	 *            the sources are null.
 	 * @throws IllegalArgumentException
 	 *             network is null, or one of the {@link ValueNode}s in source is
 	 *             null.
