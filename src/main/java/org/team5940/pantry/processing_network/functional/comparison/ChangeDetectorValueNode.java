@@ -1,4 +1,4 @@
-package org.team5940.pantry.processing_network.functional;
+package org.team5940.pantry.processing_network.functional.comparison;
 
 import org.team5940.pantry.logging.LoggingUtils;
 import org.team5940.pantry.logging.loggers.Logger;

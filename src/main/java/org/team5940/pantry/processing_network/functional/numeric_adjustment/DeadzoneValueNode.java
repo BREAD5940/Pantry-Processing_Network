@@ -1,8 +1,9 @@
-package org.team5940.pantry.processing_network.functional;
+package org.team5940.pantry.processing_network.functional.numeric_adjustment;
 
 import org.team5940.pantry.logging.loggers.Logger;
 import org.team5940.pantry.processing_network.Network;
 import org.team5940.pantry.processing_network.ValueNode;
+import org.team5940.pantry.processing_network.functional.ConstantValueNode;
 
 /**
  * This is used as a deadzone for a ValueNode. If the value of the specified
