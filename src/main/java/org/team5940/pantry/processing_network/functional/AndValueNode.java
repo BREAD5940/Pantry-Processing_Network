@@ -55,11 +55,6 @@ public class AndValueNode extends ValueNode<Boolean> {
 
 	@Override
 	protected Boolean updateValue() {
-		/**
-		 * checks the variables and if both are true, changes the return boolean and
-		 * returns it
-		 */
-
 		if (this.valueNode1.getValue() && valueNode2.getValue()) {
 			bothBooleansTrue = true;
 		}
