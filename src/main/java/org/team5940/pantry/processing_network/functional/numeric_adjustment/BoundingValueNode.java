@@ -65,6 +65,7 @@ public class BoundingValueNode extends ValueNode<Double> {
 		} else if (this.boundValueNode.getValue().doubleValue() > this.upperBound) {
 			return this.upperBound;
 		}
+		//TODO What happens for NaN/ infinity, etc...
 		return this.boundValueNode.getValue().doubleValue();
 	}
 
