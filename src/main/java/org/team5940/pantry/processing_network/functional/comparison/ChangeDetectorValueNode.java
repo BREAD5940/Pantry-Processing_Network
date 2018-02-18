@@ -24,7 +24,7 @@ import com.google.gson.JsonArray;
  * @param <V>
  *            The type of value this ValueNode returns.
  */
-
+//TODO This whole class is atrocious, I am sad. -David B
 public abstract class ChangeDetectorValueNode<T, V> extends ValueNode<V> {
 
 	/**
@@ -47,11 +47,9 @@ public abstract class ChangeDetectorValueNode<T, V> extends ValueNode<V> {
 	 *            This' Logger
 	 * @param label
 	 *            This' label.
-	 * @param requireUpdate
-	 *            If this should be updated.
 	 * @param source
 	 *            The ValueNode to check if the value has changed.
-	 * @param otherSource
+	 * @param otherSources
 	 *            The other sources for this ValueNode.
 	 */
 	public ChangeDetectorValueNode(Network network, Logger logger, String label, boolean requiresUpdate,
