@@ -16,20 +16,12 @@ public class AndValueNode extends ValueNode<Boolean> {
 	/**
 	 * Creates the first value being checked
 	 */
-
 	ValueNode<? extends Boolean> valueNode1;
 
 	/**
 	 * Creates the second value being checked
 	 */
-
 	ValueNode<? extends Boolean> valueNode2;
-
-	/**
-	 * creates the other value being checked and the boolean to return
-	 */
-
-	Boolean bothBooleansTrue = false;
 
 	/**
 	 * creates a new AndNode to check whether two values are both true
@@ -55,11 +47,7 @@ public class AndValueNode extends ValueNode<Boolean> {
 
 	@Override
 	protected Boolean updateValue() {
-		if (this.valueNode1.getValue() && valueNode2.getValue()) {
-			bothBooleansTrue = true;
-		}
-
-		return bothBooleansTrue;
+		return this.valueNode1.getValue() && valueNode2.getValue();
 	}
 
 }
