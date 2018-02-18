@@ -107,6 +107,8 @@ public abstract class Node implements LabeledObject {
 			this.logger.throwError(this, new IllegalArgumentException("Label is Null"));
 		}
 
+		//TODO We should check that the contents of the label are strings.
+
 		this.sources = sources;
 		this.network = network;
 		this.requireUpdate = requireUpdate;
