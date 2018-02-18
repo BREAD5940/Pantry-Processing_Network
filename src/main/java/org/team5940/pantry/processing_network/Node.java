@@ -145,7 +145,7 @@ public abstract class Node implements LabeledObject {
 	 *            The array of different sources the node is using.
 	 * @return A set of sources identical to the inputed array.
 	 */
-	Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
+	private Set<ValueNode<?>> generateSourcesSet(ValueNode<?>... sourcesArray) {
 		Set<ValueNode<?>> sources = new HashSet<ValueNode<?>>();
 		for (ValueNode<?> source : sourcesArray) {
 			sources.add(source);
