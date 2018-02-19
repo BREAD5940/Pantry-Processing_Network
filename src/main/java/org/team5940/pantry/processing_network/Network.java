@@ -189,7 +189,6 @@ public class Network extends Thread implements LabeledObject {
 			return 0;
 		}
 	}
-	
 
 	/**
 	 * Gets the time in microseconds from when the network started to the start of
