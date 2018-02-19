@@ -10,3 +10,5 @@ install: git clone https://github.com/BREAD5940/Pantry-Logging
 script:
     - ./gradlew test --include-build "./Pantry-Logging"
     - ./gradlew javadoc  --include-build "./Pantry-Logging"
+    - rm -rf docs/
+    - cp build/docs/javadoc/* docs/
