@@ -71,6 +71,7 @@ public class MultiplicationValueNode extends ValueNode<Double> {
 			ValueNode<? extends Number> multiple1ValueNode, double multiple2) {
 		this(network, logger, label, multiple1ValueNode,
 				new ConstantValueNode<>(network, logger, "Constant Multiple: " + label, multiple2));
+		//TODO Things like this should still declare their throws
 	}
 
 	@Override

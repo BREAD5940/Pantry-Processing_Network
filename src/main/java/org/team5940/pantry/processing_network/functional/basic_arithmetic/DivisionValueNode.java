@@ -56,7 +56,7 @@ public class DivisionValueNode extends ValueNode<Double> {
 	 *            This' Logger
 	 * @param label
 	 *            This' label.
-	 * @param dividend
+	 * @param dividendValueNode
 	 *            The ValueNode to divide.
 	 * @param divisor
 	 *            The constant number to divide the ValueNode by.
@@ -80,7 +80,7 @@ public class DivisionValueNode extends ValueNode<Double> {
 	 *            This' label.
 	 * @param dividend
 	 *            The constant number to divide.
-	 * @param divisor
+	 * @param divisorValueNode
 	 *            The ValueNode to divide the constant by.
 	 */
 	public DivisionValueNode(Network network, Logger logger, String label, double dividend,
