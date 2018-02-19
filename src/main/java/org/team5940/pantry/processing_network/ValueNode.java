@@ -41,6 +41,7 @@ public abstract class ValueNode<T extends Object> extends Node {
 			throws IllegalArgumentException, IllegalStateException {
 		this(network, logger, label, false, sourcesArray);
 	}
+	
 
 	/**
 	 * Uses a JsonArray as its label. The labels for Value Node and Node will
