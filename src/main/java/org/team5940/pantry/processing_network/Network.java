@@ -206,6 +206,7 @@ public class Network extends Thread implements LabeledObject {
 			return 0;
 		}
 	}
+	
 
 	/**
 	 * Internal method for getting System.nanoTime() as microseconds.
