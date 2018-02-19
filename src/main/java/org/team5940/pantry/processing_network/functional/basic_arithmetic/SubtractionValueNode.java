@@ -88,9 +88,9 @@ public class SubtractionValueNode extends ValueNode<Double> {
 	 *            This' logger
 	 * @param label
 	 *            This' label
-	 * @param minuendValueNode
+	 * @param minuend
 	 *            The value node being subtracted from
-	 * @param subtrahend
+	 * @param subtrahendValueNode
 	 *            The value node being subtracted
 	 */
 
