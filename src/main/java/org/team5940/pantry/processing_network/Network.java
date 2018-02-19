@@ -189,6 +189,7 @@ public class Network extends Thread implements LabeledObject {
 			return 0;
 		}
 	}
+	
 
 	/**
 	 * Gets the time in microseconds from when the network started to the start of
@@ -206,7 +207,7 @@ public class Network extends Thread implements LabeledObject {
 			return 0;
 		}
 	}
-	
+
 
 	/**
 	 * Internal method for getting System.nanoTime() as microseconds.
