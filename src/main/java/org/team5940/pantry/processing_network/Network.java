@@ -163,7 +163,7 @@ public class Network extends Thread implements LabeledObject {
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets the cycle delay of the network.
 	 * 
