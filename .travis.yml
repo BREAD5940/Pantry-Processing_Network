@@ -11,6 +11,6 @@ script: ./gradlew test --include-build "./Pantry-Logging"
 deploy:
     skip_cleanup: true
     provider: script
-    script: bash .build_docs.sh
+    script: bash .gen_docs.sh
     on:
         branch: master
