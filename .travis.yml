@@ -7,9 +7,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 install: git clone https://github.com/BREAD5940/Pantry-Logging
-script:
-    - cp build/docs/javadoc/* docs/
-    - ./gradlew test --include-build "./Pantry-Logging"
+script: ./gradlew test --include-build "./Pantry-Logging"
 deploy:
     skip_cleanup: true
     provider: script
