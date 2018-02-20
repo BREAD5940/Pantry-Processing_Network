@@ -4,6 +4,6 @@ git checkout master
 rm -rf docs/
 mkdir docs
 cp -r build/docs/javadoc/* docs/
-git add .
+git add docs/
 git commit -m "I generated the docs! -The Oven"
-git push https://github.com/BREAD5940/Pantry-Processing_Network.git
+git push https://${GH_TOKEN}@github.com/BREAD5940/Pantry-Processing_Network.git
