@@ -1,0 +1,5 @@
+org.team5940.pantry.processing_network
+org.team5940.pantry.processing_network.functional
+org.team5940.pantry.processing_network.functional.basic_arithmetic
+org.team5940.pantry.processing_network.functional.comparison
+org.team5940.pantry.processing_network.functional.numeric_adjustment
