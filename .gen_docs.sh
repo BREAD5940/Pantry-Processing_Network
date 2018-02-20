@@ -1,4 +1,5 @@
 #!/bin/bash
+git checkout master
 ./gradlew javadoc  --include-build "./Pantry-Logging"
 rm -rf docs/
 mkdir docs
