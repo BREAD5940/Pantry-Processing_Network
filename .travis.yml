@@ -14,3 +14,4 @@ deploy:
     script: bash .gen_docs.sh
     on:
         branch: master
+        condition: $(git log --format="%cn" -n 1) != "Travis CI User"
