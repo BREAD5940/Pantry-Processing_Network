@@ -13,8 +13,8 @@ public class PDNode extends ValueNode<Double> {
 	final double Kd;
 
 	public PDNode(Network network, Logger logger, String label, ValueNode<? extends Number> position,
-			ValueNode<? extends Number> velocity, ValueNode<? extends Number> targetPosition, int positionConstant,
-			int derivativeConstant) throws IllegalArgumentException, IllegalStateException {
+			ValueNode<? extends Number> velocity, ValueNode<? extends Number> targetPosition, double positionConstant,
+			double derivativeConstant) throws IllegalArgumentException, IllegalStateException {
 		super(network, logger, label, position, velocity);
 
 		this.position = position;
