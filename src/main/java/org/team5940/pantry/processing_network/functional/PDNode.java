@@ -6,24 +6,27 @@ import org.team5940.pantry.logging.loggers.Logger;
 
 public class PDNode extends ValueNode<Double> {
 
-    ValueNode<? extends Number> _position;
-    ValueNode<? extends Number> _velocity;
-    ValueNode<? extends Number> targetPosition;
-    final double Kp;
-    final double Kd;
+	ValueNode<? extends Number> position;
+	ValueNode<? extends Number> velocity;
+	ValueNode<? extends Number> targetPosition;
+	final double Kp;
+	final double Kd;
 
-    public PDNode(Network network, Logger logger, String label, ValueNode<? extends Number> position, ValueNode<? extends Number> velocity, ValueNode<? extends  Number> targetPosition,int positionConstant, int derivativeConstant) throws IllegalArgumentException, IllegalStateException {
-        super(network, logger, label, sourcesArray, position, velocity);
+	public PDNode(Network network, Logger logger, String label, ValueNode<? extends Number> position,
+			ValueNode<? extends Number> velocity, ValueNode<? extends Number> targetPosition, int positionConstant,
+			int derivativeConstant) throws IllegalArgumentException, IllegalStateException {
+		super(network, logger, label, position, velocity);
 
-        _position = position;
-        _velocity = velocity;
-        Kp = positionConstant;
-        Kd = derivativeConstant;
-        this.targetPosition = targetPosition;
-    }
+		this.position = position;
+		this.velocity = velocity;
+		Kp = positionConstant;
+		Kd = derivativeConstant;
+		this.targetPosition = targetPosition;
+	}
 
-    @Override
-    protected Double updateValue() {
-        return Kp*(targetPosition.getValue().doubleValue() - _position.getValue().doubleValue())+Kd*(0 - _velocity.getValue().doubleValue());
-    }
+	@Override
+	protected Double updateValue() {
+		return Kp * (this.targetPosition.getValue().doubleValue() - this.position.getValue().doubleValue())
+				+ Kd * (0 - this.velocity.getValue().doubleValue());
+	}
 }
