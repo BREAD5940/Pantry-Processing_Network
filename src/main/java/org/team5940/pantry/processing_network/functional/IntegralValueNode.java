@@ -8,18 +8,21 @@ public class IntegralValueNode extends ValueNode<Double> {
 
 	ValueNode<? extends Number> integrandValueNode;
 
-	double integral = 0;
+	double integral;
 
 	public IntegralValueNode(Network network, Logger logger, String label,
-			ValueNode<? extends Number> integrandValueNode) throws IllegalArgumentException, IllegalStateException {
+			ValueNode<? extends Number> integrandValueNode, double initialValue)
+			throws IllegalArgumentException, IllegalStateException {
 		super(network, logger, label, integrandValueNode);
 
 		this.integrandValueNode = integrandValueNode;
+		this.integral = initialValue;
 	}
 
 	@Override
 	protected Double updateValue() {
-		this.integral += integrandValueNode.getValue().doubleValue() * this.getNetwork().getCycleDelay();
+
+		this.integral += integrandValueNode.getValue().doubleValue() * (((float) this.getNetwork().getCycleDelay()) / 1000000);
 		return this.integral;
 	}
 
