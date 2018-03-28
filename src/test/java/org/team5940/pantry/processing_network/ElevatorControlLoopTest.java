@@ -61,7 +61,7 @@ public class ElevatorControlLoopTest {
 
 		voltageCircleValueNode.setGetValue(controlLoopNode);
 
-		new ElevatorPositionTestNode<>(network, logger, "Elevator Test", true, positionValueNode, controlLoopNode, 88);
+		new ElevatorPositionTestNode<>(network, logger, "Elevator Test", true, positionValueNode, controlLoopNode, 2);
 
 		network.start();
 
