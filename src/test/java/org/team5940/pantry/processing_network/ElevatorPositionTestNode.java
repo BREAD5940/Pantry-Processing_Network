@@ -30,9 +30,4 @@ public class ElevatorPositionTestNode<T> extends Node {
 		assertTrue(this.setVolts >= -12);
 		assertTrue(this.setVolts <= 12);
 	}
-
-	public double getSetVolts() {
-		return this.setVolts;
-	}
-
 }
