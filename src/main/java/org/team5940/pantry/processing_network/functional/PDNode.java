@@ -26,7 +26,11 @@ public class PDNode extends ValueNode<Double> {
 
 	@Override
 	protected Double updateValue() {
-		return Kp * (this.targetPosition.getValue().doubleValue() - this.position.getValue().doubleValue())
+		double value = Kp * (this.targetPosition.getValue().doubleValue() - this.position.getValue().doubleValue())
 				+ Kd * (0 - this.velocity.getValue().doubleValue());
+		// TODO this should not actually be here.
+		value = Math.min(Math.max(value, -12), 12);
+		System.out.println("PD: " + value);
+		return value;
 	}
 }
