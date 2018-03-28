@@ -125,9 +125,8 @@ public class Network extends Thread implements LabeledObject {
 				} catch (InterruptedException e) {
 					this.logger.log(new ErrorEventMessage(this, e));
 				}
-			} else {
-				this.logger.log(new NumberValueMessage(this, extraTime, NumberValueMessage.MICROSECONDS_UNIT));
 			}
+			this.logger.log(new NumberValueMessage(this, extraTime, NumberValueMessage.MICROSECONDS_UNIT));
 		}
 	}
 
@@ -206,7 +205,6 @@ public class Network extends Thread implements LabeledObject {
 			return 0;
 		}
 	}
-
 
 	/**
 	 * Internal method for getting System.nanoTime() as microseconds.
